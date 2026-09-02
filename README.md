@@ -70,7 +70,12 @@ CSS-CSC436/
 
 ## Getting the repo
 
-### Step 0 — do you have git?
+### Step 0 — a GitHub account and git
+
+You need a free [GitHub account](https://github.com/signup) — you will be
+forking the repo to it and opening pull requests from it.
+
+Then check whether you have git:
 
 Open a terminal (**Terminal** on macOS, **PowerShell** or **Git Bash** on
 Windows) and run:
@@ -96,24 +101,55 @@ git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
 
-### Step 1 — clone it
+### Step 1 — fork it
+
+You are **not** a collaborator on the course repository, so you cannot push to
+it — and you shouldn't be able to. Instead you take your own copy.
+
+Go to <https://github.com/diabeatz96/CSS-CSC436> and click **Fork** (top
+right) → **Create fork**.
+
+You now own `https://github.com/YOUR-USERNAME/CSS-CSC436`: a complete copy of
+the course repo under your own account, that you can push to freely.
+
+### Step 2 — clone *your* fork
 
 Go to the folder where you keep your projects, then:
 
 ```bash
-git clone https://github.com/diabeatz96/CSS-CSC436.git
-```
-
-> That URL is also on the green **Code** button on the repository page.
-> Choose **HTTPS** unless you have already set up SSH keys.
-
-That creates a `CSS-CSC436` folder containing everything. Move into it:
-
-```bash
+git clone https://github.com/YOUR-USERNAME/CSS-CSC436.git
 cd CSS-CSC436
 ```
 
-### Step 2 — check it worked
+> **Use your own username, not mine.** If you clone my copy instead of your
+> fork, everything will look fine until your first `git push`, which will fail
+> with a permissions error. The URL is on the green **Code** button of *your*
+> fork.
+
+### Step 3 — point at the class repo as `upstream`
+
+Your fork is a snapshot taken the moment you clicked Fork. It does not update
+itself. Add a second remote so you can pull my changes as the course goes on:
+
+```bash
+git remote add upstream https://github.com/diabeatz96/CSS-CSC436.git
+git remote -v
+```
+
+You should now see four lines — `origin` and `upstream`, each twice:
+
+```
+origin    https://github.com/YOUR-USERNAME/CSS-CSC436.git (fetch)
+origin    https://github.com/YOUR-USERNAME/CSS-CSC436.git (push)
+upstream  https://github.com/diabeatz96/CSS-CSC436.git (fetch)
+upstream  https://github.com/diabeatz96/CSS-CSC436.git (push)
+```
+
+**Two remotes, two jobs.** `origin` is yours: you push to it. `upstream` is
+mine: you only ever pull from it. Getting these two straight is most of what
+makes this workflow click.
+
+### Step 4 — check it worked
 
 ```bash
 ls          # macOS / Linux / Git Bash
@@ -125,9 +161,10 @@ You should see `index.html`, `assets`, and the lesson pages.
 ### Alternative: no terminal at all
 
 You can also download the repo as a ZIP from the **Code** button on GitHub and
-unzip it. It works — but you get no version history, no way to pull updates
-when I push a fix, and no way to hand work in. Use `git clone` if you possibly
-can.
+unzip it. The site will run — but you get no version history, no way to pull
+updates when I push a fix, and **no way to hand work in**, because there is no
+fork to open a pull request from. Treat this as a last resort for a broken
+machine, not as a way to skip the git setup.
 
 ---
 
@@ -319,7 +356,8 @@ Check options: `label` (required), `selector`, `prop`, `pseudo`, `equals`
 
 ## Working during class — the git loop
 
-Work on a branch of your own so your experiments never collide with mine.
+Work on a branch so your experiments stay off `main`. You are pushing to your
+own fork, so nothing you do here can affect anyone else.
 
 ```bash
 # once, at the start of the course
@@ -333,18 +371,26 @@ git status                       # what did I change?
 git diff                         # ...and what exactly changed in it?
 git add .                        # stage everything
 git commit -m "Session 3: flexbox toolbar"
-git push -u origin my-name/walkalong   # first push on this branch
+git push -u origin my-name/walkalong   # origin = YOUR fork. First push only.
 git push                                # every push after that
 ```
 
-Pull my updates before each class:
+**Before each class**, pull my new material down from `upstream` and into your
+branch:
 
 ```bash
 git checkout main
-git pull
+git fetch upstream               # download my changes (changes nothing yet)
+git merge upstream/main          # apply them to your local main
+git push                         # keep your fork's main in sync too
+
 git checkout my-name/walkalong
-git merge main                   # bring my changes into your branch
+git merge main                   # and bring them into your working branch
 ```
+
+That last `git push` on `main` is easy to skip and worth doing: if your fork's
+`main` falls behind, your pull requests start showing my changes as though you
+made them, and the real diff gets buried.
 
 ### Commit messages
 
@@ -362,15 +408,27 @@ Bad:   fixed stuff
 
 ## Handing work in
 
-1. Push your branch: `git push -u origin my-name/walkalong`
-2. On GitHub, open a **Pull Request** into `main`.
-3. In the description, list which labs you completed and anything you got
-   stuck on. Being specific about what confused you is worth marks.
-4. I review it as a pull request and leave comments inline — the same way it
-   works on a real team.
+1. Push your branch to your fork: `git push -u origin my-name/walkalong`
+2. Open **your fork** on GitHub. A banner appears: **Compare & pull request**.
+   Click it. (No banner? Go to the **Pull requests** tab → **New pull request**
+   → **compare across forks**.)
+3. **Check the direction before you submit.** GitHub usually gets it right, but
+   confirm it reads:
 
-Found a dead link or a typo in the course material? Same process. A merged
-fix counts toward participation.
+   > base repository: `diabeatz96/CSS-CSC436` · base: `main`
+   > ← head repository: `YOUR-USERNAME/CSS-CSC436` · compare: `my-name/walkalong`
+
+   Left side is mine, right side is yours. If both sides say your username,
+   you are opening a PR against your own fork and I will never see it.
+4. In the description, list which labs you completed and anything you got stuck
+   on. Being specific about what confused you is worth marks.
+5. I review it as a pull request and leave comments inline — the same way it
+   works on a real team. Push more commits to the same branch and the PR
+   updates itself; you do not open a new one.
+
+Found a dead link or a typo in the course material? Same process. A merged fix
+counts toward participation — and it is a genuine open-source contribution you
+can point at later.
 
 ---
 
@@ -383,9 +441,13 @@ fix counts toward participation.
 | Exercise previews are blank | JavaScript blocked | Check the DevTools Console. The labs need JS; the lesson pages don't |
 | "Check my work" never responds | A syntax error in your CSS | An unclosed `{` swallows every rule after it. Look for the first rule that stopped applying |
 | My change doesn't show up | Cached file, or a losing rule | Hard-reload (`Ctrl/⌘ + Shift + R`). Then check DevTools → Styles for a struck-through declaration |
-| `git clone` asks for a password | GitHub dropped password auth | Use a [personal access token](https://github.com/settings/tokens) as the password, or set up SSH keys |
+| `git push` → `403` or `Permission denied` | You cloned my repo instead of your fork | `git remote -v`. If `origin` is not your username: `git remote set-url origin https://github.com/YOUR-USERNAME/CSS-CSC436.git` |
+| `git push` asks for a password | GitHub dropped password auth | Use a [personal access token](https://github.com/settings/tokens) as the password, or set up SSH keys |
+| `remote upstream already exists` | You ran Step 3 twice | Harmless. Check it with `git remote -v` and move on |
+| Your PR shows dozens of files you never touched | Your fork's `main` is behind mine | `git fetch upstream && git merge upstream/main`, then push your branch again |
+| "This branch has no conflicts" but I can't see your work | The PR points at your own fork | Reopen it with base `diabeatz96/CSS-CSC436` — see [Handing work in](#handing-work-in) |
 | `fatal: not a git repository` | You're in the wrong folder | `cd` into the cloned folder first |
-| Merge conflict on `git merge main` | We both edited the same lines | Open the file, keep the right version, delete the `<<<<<<<` markers, then `git add` and `git commit` |
+| Merge conflict on `git merge upstream/main` | We both edited the same lines | Open the file, keep the right version, delete the `<<<<<<<` markers, then `git add` and `git commit` |
 
 ---
 

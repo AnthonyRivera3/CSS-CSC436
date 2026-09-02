@@ -122,14 +122,19 @@
     <div class="prose">
       <h2>Getting the repo</h2>
       <p>
-        Full instructions live in the <a href="README.md">README</a>. The short
-        version, from your terminal:
+        You are not a collaborator on the class repository, so you work from
+        your own <b>fork</b> and hand work in as a <b>pull request</b> — the
+        same way open source works. Full instructions live in the
+        <a href="README.md">README</a>. The short version:
       </p>
-      <pre class="code"><i># 1. clone it</i>
-git clone https://github.com/diabeatz96/CSS-CSC436.git
+      <pre class="code"><i># 1. FORK the repo on GitHub first, then clone YOUR fork</i>
+git clone https://github.com/&lt;your-username&gt;/CSS-CSC436.git
 cd CSS-CSC436
 
-<i># 2. open it — there is no build step, no npm install, nothing to compile</i>
+<i># 2. add the class repo as "upstream" so you can pull my updates later</i>
+git remote add upstream https://github.com/diabeatz96/CSS-CSC436.git
+
+<i># 3. open it — no build step, no npm install, nothing to compile</i>
 open index.html          <i># macOS</i>
 start index.html         <i># Windows</i></pre>
       <div class="note note--tip">
