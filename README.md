@@ -44,7 +44,7 @@ exercises.
 | `assets/js/exercises.js` | The lab editor, live preview, and grading |
 
 ```
-css-fundamentals/
+CSS-CSC436/
 ├── index.html
 ├── lesson-1-persona.html
 ├── lesson-2-starwars.html
@@ -101,17 +101,16 @@ git config --global user.email "you@example.com"
 Go to the folder where you keep your projects, then:
 
 ```bash
-git clone https://github.com/<your-org>/css-fundamentals.git
+git clone https://github.com/diabeatz96/CSS-CSC436.git
 ```
 
-> Replace `<your-org>/css-fundamentals` with the URL from the green
-> **Code** button on the repository page. Choose **HTTPS** unless you have
-> already set up SSH keys.
+> That URL is also on the green **Code** button on the repository page.
+> Choose **HTTPS** unless you have already set up SSH keys.
 
-That creates a `css-fundamentals` folder containing everything. Move into it:
+That creates a `CSS-CSC436` folder containing everything. Move into it:
 
 ```bash
-cd css-fundamentals
+cd CSS-CSC436
 ```
 
 ### Step 2 — check it worked
