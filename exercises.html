@@ -819,7 +819,7 @@
 
       <script type="application/json" data-lab-checks>
       [
-        { "label": "Only transform and opacity transition", "selector": ".rune", "prop": "transition-property", "equals": "transform, opacity" },
+        { "label": "Only transform and opacity transition", "selector": ".rune", "prop": "transition-property", "equals": ["transform, opacity", "opacity, transform"] },
         { "label": "The transition lasts 0.3s",             "selector": ".rune", "prop": "transition-duration", "min": 0.29, "max": 0.31 },
         { "label": "An animation named pulse runs on .glow","selector": ".glow", "prop": "animation-name",      "equals": "pulse" },
         { "label": "The animation actually has a duration", "selector": ".glow", "prop": "animation-duration",  "min": 0.1 },

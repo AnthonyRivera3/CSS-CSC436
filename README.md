@@ -36,6 +36,7 @@ exercises.
 | `code-review.html` | Five case studies rendered **before and after**, with a real line diff |
 | `exercises.html` | Ten fill-in-the-blank labs that check your work automatically |
 | `resources.html` | Where to get fonts, premade CSS, practice sites, references, tools |
+| `ANSWER-KEY.md` | Instructor reference: every lab solution, what each check reads, and the common wrong answers |
 | `assets/css/base.css` | The reset, the design tokens, and every shared component |
 | `assets/css/theme-*.css` | One file per theme. Almost entirely custom-property re-declarations |
 | `assets/css/lab.css` | Styles for the two interactive widgets |
@@ -53,6 +54,7 @@ CSS-CSC436/
 ├── exercises.html
 ├── resources.html
 ├── README.md
+├── ANSWER-KEY.md
 └── assets/
     ├── css/
     │   ├── base.css
