@@ -109,6 +109,11 @@
       '        : { ok:false, why:t.prop+" is "+actual+", expected it to contain "+t.contains };',
       '    }',
       '    if(t.min != null || t.max != null){',
+      /* A measurement taken in a preview with no width is meaningless. Say so
+         rather than reporting "0px, expected at least 90" at a student who
+         wrote the right answer. */
+      '      if(document.documentElement.clientWidth < 50)',
+      '        return {ok:false, why:"the preview has no width to measure right now \u2014 widen the window, then press Check again"};',
       '      var n2 = numberOf(actualRaw);',
       '      if(isNaN(n2)) return {ok:false, why:t.prop+" is not a number ("+actual+")"};',
       '      if(t.min != null && n2 < t.min) return {ok:false, why:t.prop+" is "+actual+", expected at least "+t.min};',

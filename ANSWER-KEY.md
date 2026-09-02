@@ -258,7 +258,7 @@ p {
 .gallery {
   display: grid;
   gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr));
 }
 .tile {
   display: grid;
@@ -277,12 +277,12 @@ p {
 - The gallery is a grid → `.gallery` — `display` is `grid`
 - 16px gap between tiles → `.gallery` — `column-gap` is `16px`
 - …in both directions → `.gallery` — `row-gap` is `16px`
-- Tiles share the row instead of stacking one per line → `.tile` — `width` is between 90 and 230
+- Tiles share the row instead of stacking one per line → `.tile` — `width` is between 90 and 240
 
 **Common wrong answers**
 
 - **Uses `auto-fill` instead of `auto-fit`.** Often passes with six tiles. Delete four of them live: `auto-fill` keeps the empty tracks and the two survivors stay narrow; `auto-fit` collapses them so the tiles stretch. That is the entire difference and it is invisible until the grid is under-filled.
-- **Writes `minmax(140px, 1fr)` without `min()`.** Passes every check, and overflows below a 140px viewport. The check can't see it — the mobile test can. Narrow the preview to 320px and show the horizontal scrollbar.
+- **Writes `minmax(120px, 1fr)` without `min()`.** Passes every check. A fixed 120px track cannot shrink below 120px, so in any container narrower than that it overflows. You can't demonstrate it in the lab preview — that pane has a 320px floor — so show it on a real page in DevTools device mode at 320px, or just explain it: `min(120px, 100%)` says "120px, unless that's wider than the space I have."
 - **Sets a fixed column count like `repeat(3, 1fr)`.** Passes the tile-width check at desktop size. Resize the window: it never reflows. The point of the lab is the *absence* of a media query.
 
 > **Say this:** `auto-fit` + `minmax(min(X, 100%), 1fr)` is the responsive grid. Learn it as one phrase.
@@ -508,3 +508,4 @@ p {
 | Score says passing, result looks wrong | Expected. Checks read computed styles; mark the approach by eye. |
 | Student lost their work | It is in `localStorage` under `css-course:lab:<id>`, per browser. **Reset** wipes that lab — there is a confirm prompt. |
 | A check looks unfair | Every check option is documented at the bottom of `exercises.html`. Edit the JSON block in place; nothing else needs rewiring. |
+| A layout check fails on an answer that looks right | The preview needs width to measure. `.lab__preview` carries a deliberate `min-inline-size: 320px` floor for exactly this reason — if you change it, re-run the validation, because labs 01 and 06 are tuned against it. |

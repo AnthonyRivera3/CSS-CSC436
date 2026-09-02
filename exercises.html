@@ -418,7 +418,7 @@
         <p class="lab__brief">
           Turn <code class="inline">.gallery</code> into a grid with a
           <b>16px gap</b> whose columns are
-          <code class="inline">repeat(auto-fit, minmax(min(140px, 100%), 1fr))</code>.
+          <code class="inline">repeat(auto-fit, minmax(min(120px, 100%), 1fr))</code>.
           You should end up with several columns, and no horizontal scrollbar
           at any width.
         </p>
@@ -455,7 +455,7 @@
         .gallery {
           display: grid;
           gap: 16px;
-          grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+          grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr));
         }
         .tile {
           display: grid;
@@ -474,7 +474,7 @@
         { "label": "The gallery is a grid",   "selector": ".gallery", "prop": "display",    "equals": "grid" },
         { "label": "16px gap between tiles",  "selector": ".gallery", "prop": "column-gap", "equals": "16px" },
         { "label": "…in both directions",     "selector": ".gallery", "prop": "row-gap",    "equals": "16px" },
-        { "label": "Tiles share the row instead of stacking one per line", "selector": ".tile", "prop": "width", "min": 90, "max": 230 }
+        { "label": "Tiles share the row instead of stacking one per line", "selector": ".tile", "prop": "width", "min": 90, "max": 240 }
       ]
       </script>
 

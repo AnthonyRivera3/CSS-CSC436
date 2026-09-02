@@ -166,7 +166,13 @@
   .lab__body { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
 }
 
-.lab__pane { background-color: var(--bg); display: flex; flex-direction: column; min-inline-size: 0; }
+.lab__pane {
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  overflow-x: auto;      /* the preview below has a floor; let it scroll, not overflow */
+}
 
 .lab__editor {
   flex: 1;
@@ -188,6 +194,15 @@
 .lab__preview {
   flex: 1;
   inline-size: 100%;
+  /* A floor on the width is load-bearing, not cosmetic. Several checks read
+     USED layout values (an auto margin's resolved size, a grid item's width),
+     and those all collapse to 0px in a zero-width or hairline-narrow preview
+     — which would report a correct answer as wrong.
+     320px specifically: it leaves 280px of content box, which is wide enough
+     for lab 06's auto-fit grid to form two columns, and is never equal to
+     lab 01's 260px target — so an UNSTYLED block div can't accidentally
+     satisfy that check either. Changing this number can silently break both. */
+  min-inline-size: 320px;
   min-block-size: 300px;
   border: 0;
   background-color: #fff;
