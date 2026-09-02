@@ -315,8 +315,10 @@ tells you which requirements you met and what the actual value was.
 
 - Work is saved in your browser (`localStorage`, key `css-course:lab:*`) as you
   type. It never leaves your machine.
-- **Tab** indents inside the editor. **Escape** then **Tab** moves to the next
-  control.
+- The editor behaves like a code editor: **Tab** indents (and indents every
+  line of a multi-line selection), **Shift+Tab** outdents, and **Ctrl/⌘+Z**
+  undoes — including the indenting. **Escape** then **Tab** moves to the next
+  control instead of indenting, so the editor is never a keyboard trap.
 - **Reset** wipes that lab back to the starter. There's a confirm prompt.
 
 ### Writing a new lab

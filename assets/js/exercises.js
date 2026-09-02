@@ -118,17 +118,69 @@
       }, 300);
     });
 
-    /* A Tab key in a code textarea should indent, not jump to the next
-       control. We restore an escape hatch: Escape then Tab still moves on. */
+    /* ------------------------------------------------------------------ */
+    /* Tab handling.                                                        */
+    /*                                                                      */
+    /* Writing to `editor.value` would be the obvious implementation and is */
+    /* the wrong one: assigning to it WIPES the browser's native undo       */
+    /* history for the field, so Ctrl+Z can no longer rescue the student.   */
+    /* `execCommand('insertText')` is deprecated but is still the only way  */
+    /* to edit a textarea as if the user typed it, undo stack intact.       */
+    /* ------------------------------------------------------------------ */
+    var INDENT = '  ';
+
+    function replaceRange(start, end, text, selStart, selEnd) {
+      editor.selectionStart = start;
+      editor.selectionEnd = end;
+      var inserted = false;
+      try { inserted = document.execCommand('insertText', false, text); }
+      catch (err) { inserted = false; }
+      if (!inserted) {
+        /* Fallback for anything that refuses execCommand. Loses undo, but
+           losing undo beats losing the keystroke entirely. */
+        editor.value = editor.value.slice(0, start) + text + editor.value.slice(end);
+        editor.dispatchEvent(new Event('input'));
+      }
+      editor.selectionStart = selStart;
+      editor.selectionEnd = selEnd;
+    }
+
     var escaped = false;
     editor.addEventListener('keydown', function (e) {
+      /* Escape then Tab moves to the next control, so the editor is not a
+         keyboard trap for anyone navigating without a mouse. */
       if (e.key === 'Escape') { escaped = true; return; }
-      if (e.key !== 'Tab' || escaped) { escaped = false; return; }
+      if (e.key !== 'Tab') { escaped = false; return; }
+      if (escaped) { escaped = false; return; }
+
       e.preventDefault();
+
+      var v = editor.value;
       var s = editor.selectionStart, en = editor.selectionEnd;
-      editor.value = editor.value.slice(0, s) + '  ' + editor.value.slice(en);
-      editor.selectionStart = editor.selectionEnd = s + 2;
-      editor.dispatchEvent(new Event('input'));
+      var spansLines = v.slice(s, en).indexOf('\n') !== -1;
+
+      /* Plain Tab with a caret (or a selection inside one line): insert an
+         indent. This is the only case where replacing the selection is what
+         the student meant. */
+      if (!spansLines && !e.shiftKey) {
+        replaceRange(s, en, INDENT, s + INDENT.length, s + INDENT.length);
+        return;
+      }
+
+      /* Otherwise operate on whole lines, the way every code editor does.
+         Crucially this INDENTS a multi-line selection rather than replacing
+         it — the old behaviour deleted everything the student had selected. */
+      var start = v.lastIndexOf('\n', s - 1) + 1;
+      var end = v.indexOf('\n', en);
+      if (end === -1) end = v.length;
+
+      var block = v.slice(start, end);
+      var out = e.shiftKey
+        ? block.replace(/^[ \t]{1,2}/gm, '')   /* outdent */
+        : block.replace(/^(?!$)/gm, INDENT);   /* indent, skipping blank lines */
+
+      if (out === block) return;
+      replaceRange(start, end, out, start, start + out.length);
     });
 
     mount.querySelector('.lab__bar').addEventListener('click', function (e) {
