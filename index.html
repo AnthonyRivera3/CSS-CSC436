@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CSS Fundamentals — Student Walk-Alongs</title>
+<meta name="description" content="A hands-on CSS course: three game-themed lessons, a live code-review page, and fill-in-the-blank exercises you can check in the browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body class="page">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">CSS</span> Walk-Alongs</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html" aria-current="page"><span>Home</span></a>
+      <a href="lesson-1-persona.html"><span>1 · Foundations</span></a>
+      <a href="lesson-2-starwars.html"><span>2 · Layout</span></a>
+      <a href="lesson-3-baldursgate.html"><span>3 · Modern</span></a>
+      <a href="code-review.html"><span>Code Review</span></a>
+      <a href="exercises.html"><span>Exercises</span></a>
+      <a href="resources.html"><span>Resources</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero">
+    <p class="eyebrow">Modern Web Development</p>
+    <h1>Learn CSS by building three sites you'd actually want to look at.</h1>
+    <p class="lede">
+      Every session we build the same page together, live. You type what I type,
+      then we break it, review it, and fix it. Three modules, three visual
+      identities — each one an original CSS homage to a game worth stealing
+      design ideas from.
+    </p>
+    <div class="cluster" style="margin-block-start: var(--space-m);">
+      <a class="btn" href="lesson-1-persona.html">Start Module 1 →</a>
+      <a class="btn btn--ghost" href="#setup">Set up the repo first</a>
+    </div>
+  </section>
+
+  <section class="wrap section" id="modules">
+    <h2 style="font-size: var(--step-4);">The three modules</h2>
+    <p class="dim" style="margin-block: var(--space-2xs) var(--space-l); max-inline-size: 62ch;">
+      Each module is one page you build from an empty file. The theme changes;
+      the underlying components never do. That is the point.
+    </p>
+
+    <div class="grid" style="--min: 300px;">
+
+      <a class="card" href="lesson-1-persona.html">
+        <div class="cluster"><span class="tag">Module 1</span><span class="tag tag--2">Beginner</span></div>
+        <h3>Foundations</h3>
+        <p><b>Theme: Phantom</b> — a Persona-5-inspired study in red, black, and
+          absolutely nothing sitting straight.</p>
+        <p class="mono" style="font-size:0.78rem;">
+          selectors · specificity · the box model · color · typography ·
+          custom properties · pseudo-classes
+        </p>
+      </a>
+
+      <a class="card" href="lesson-2-starwars.html">
+        <div class="cluster"><span class="tag">Module 2</span><span class="tag tag--2">Intermediate</span></div>
+        <h3>Layout</h3>
+        <p><b>Theme: Outer Rim</b> — a Star-Wars-inspired cockpit readout, built
+          from starfields and scanlines made of pure gradients.</p>
+        <p class="mono" style="font-size:0.78rem;">
+          flexbox · grid · positioning · z-index · responsive design ·
+          media &amp; container queries
+        </p>
+      </a>
+
+      <a class="card" href="lesson-3-baldursgate.html">
+        <div class="cluster"><span class="tag">Module 3</span><span class="tag tag--2">Advanced</span></div>
+        <h3>Modern CSS</h3>
+        <p><b>Theme: Faerûn</b> — a Baldur's-Gate-3-inspired parchment tome, and
+          the only light theme in the course.</p>
+        <p class="mono" style="font-size:0.78rem;">
+          nesting · :has() · @layer · clamp() · color-mix() · transitions ·
+          keyframes · transforms
+        </p>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="wrap section" id="tools">
+    <h2 style="font-size: var(--step-4);">Three pages that aren't lessons</h2>
+    <div class="grid" style="--min: 260px; margin-block-start: var(--space-l);">
+
+      <a class="card" href="code-review.html">
+        <h3>Code Review</h3>
+        <p>The same component, written badly and then written well — rendered
+          side by side with a real line-by-line diff between the two
+          stylesheets. This is the page we spend the most time on.</p>
+      </a>
+
+      <a class="card" href="exercises.html">
+        <h3>Exercises</h3>
+        <p>Ten fill-in-the-blank labs. Write CSS in the editor, watch the
+          preview update, then hit <b>Check my work</b> and the page grades
+          your computed styles.</p>
+      </a>
+
+      <a class="card" href="resources.html">
+        <h3>Resources</h3>
+        <p>Where to get fonts in 2026, which CSS libraries are worth pulling in,
+          and the reference sites you should have open while you work.</p>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="wrap section" id="setup">
+    <div class="prose">
+      <h2>Getting the repo</h2>
+      <p>
+        Full instructions live in the <a href="README.md">README</a>. The short
+        version, from your terminal:
+      </p>
+      <pre class="code"><i># 1. clone it</i>
+git clone https://github.com/&lt;your-org&gt;/css-fundamentals.git
+cd css-fundamentals
+
+<i># 2. open it — there is no build step, no npm install, nothing to compile</i>
+open index.html          <i># macOS</i>
+start index.html         <i># Windows</i></pre>
+      <div class="note note--tip">
+        <strong>Better than double-clicking:</strong> open the folder in VS Code,
+        install the <b>Live Server</b> extension, then right-click
+        <code class="inline">index.html</code> → <b>Open with Live Server</b>.
+        You get automatic reload on save, and the exercise pages behave exactly
+        as they will on a real server.
+      </div>
+
+      <h2>How a page in this repo is put together</h2>
+      <p>
+        Every page loads <b>two</b> stylesheets, in this order:
+      </p>
+      <pre class="code">&lt;link rel="stylesheet" href="assets/css/<b>base.css</b>"&gt;        <i>← components + tokens</i>
+&lt;link rel="stylesheet" href="assets/css/<b>theme-persona.css</b>"&gt; <i>← redefines the tokens</i></pre>
+      <p>
+        <code class="inline">base.css</code> defines the reset, the design
+        tokens, and every component (<code class="inline">.card</code>,
+        <code class="inline">.btn</code>, <code class="inline">.nav</code>…).
+        A theme file re-declares those tokens and adds a handful of signature
+        flourishes. Nothing in a theme file rewrites a component from scratch.
+      </p>
+      <p>
+        That is why the three lessons look nothing alike while sharing about
+        90% of their CSS — and it is the single most useful habit in this
+        course.
+      </p>
+
+      <h2>The house rules</h2>
+      <ul>
+        <li><b>Type it, don't paste it.</b> Muscle memory is the point of a walk-along.</li>
+        <li><b>Break it on purpose.</b> Every property you learn, change it to a wrong value once and look at what happens.</li>
+        <li><b>Inspect everything.</b> <code class="inline">F12</code> → Elements → Styles. If you cannot see why a rule is winning, you cannot debug it.</li>
+        <li><b>No <code class="inline">!important</code></b> without saying out loud why. Usually there is a specificity fix instead.</li>
+        <li><b>Commit at the end of every session</b> so you have a history of your own progress.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap section" id="syllabus">
+    <h2 style="font-size: var(--step-4); margin-block-end: var(--space-l);">Syllabus at a glance</h2>
+    <div class="table-scroll">
+      <table class="data">
+        <thead>
+          <tr><th>Session</th><th>Page</th><th>Topics</th><th>You leave with</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td><td><a href="lesson-1-persona.html">Foundations</a></td>
+            <td>Selectors, specificity, cascade, box model</td>
+            <td>A styled hero and card grid</td>
+          </tr>
+          <tr>
+            <td>2</td><td><a href="lesson-1-persona.html#type">Foundations</a></td>
+            <td>Color, units, typography, custom properties</td>
+            <td>A token system you reuse all course</td>
+          </tr>
+          <tr>
+            <td>3</td><td><a href="lesson-2-starwars.html#flex">Layout</a></td>
+            <td>Flexbox: axes, gap, wrap, alignment</td>
+            <td>A responsive nav and toolbar</td>
+          </tr>
+          <tr>
+            <td>4</td><td><a href="lesson-2-starwars.html#grid">Layout</a></td>
+            <td>Grid: tracks, areas, auto-fit, minmax</td>
+            <td>A dashboard that reflows with no media query</td>
+          </tr>
+          <tr>
+            <td>5</td><td><a href="lesson-2-starwars.html#responsive">Layout</a></td>
+            <td>Position, z-index, media &amp; container queries</td>
+            <td>A component that adapts to <em>its own</em> width</td>
+          </tr>
+          <tr>
+            <td>6</td><td><a href="lesson-3-baldursgate.html#nesting">Modern</a></td>
+            <td>Nesting, <code>:has()</code>, <code>@layer</code>, <code>color-mix()</code></td>
+            <td>Flatter, less repetitive stylesheets</td>
+          </tr>
+          <tr>
+            <td>7</td><td><a href="lesson-3-baldursgate.html#motion">Modern</a></td>
+            <td>Transitions, keyframes, transforms, reduced motion</td>
+            <td>Motion that doesn't make anyone sick</td>
+          </tr>
+          <tr>
+            <td>8</td><td><a href="code-review.html">Code Review</a></td>
+            <td>Reading a diff, refactoring, debugging the cascade</td>
+            <td>The habit of reviewing before shipping</td>
+          </tr>
+          <tr>
+            <td>9</td><td><a href="exercises.html">Exercises</a></td>
+            <td>Everything, unassisted</td>
+            <td>Ten passing labs</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><b>CSS Fundamentals — Student Walk-Alongs.</b> Built with zero dependencies:
+       plain HTML, CSS, and a little vanilla JavaScript for the two lab pages.</p>
+    <p style="margin-block-start: var(--space-2xs);">
+      Themes are original CSS homages. No game assets, logos, or trademarked
+      material are used or redistributed here — every shape on these pages is
+      drawn by a gradient, a border, or a <code class="inline">clip-path</code>.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

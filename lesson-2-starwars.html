@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 2 · Layout — CSS Walk-Alongs</title>
+<meta name="description" content="Flexbox, Grid, positioning, media queries and container queries, taught through a Star-Wars-inspired console theme.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛸</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Titillium+Web:wght@300;400;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/theme-starwars.css">
+</head>
+<body class="page theme-starwars">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">CSS</span> Walk-Alongs</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span>Home</span></a>
+      <a href="lesson-1-persona.html"><span>1 · Foundations</span></a>
+      <a href="lesson-2-starwars.html" aria-current="page"><span>2 · Layout</span></a>
+      <a href="lesson-3-baldursgate.html"><span>3 · Modern</span></a>
+      <a href="code-review.html"><span>Code Review</span></a>
+      <a href="exercises.html"><span>Exercises</span></a>
+      <a href="resources.html"><span>Resources</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero">
+    <p class="eyebrow readout">Module 2 · Theme: Outer Rim</p>
+    <h1>Layout is a conversation<br>about space.</h1>
+    <p class="lede">
+      Flexbox distributes along <b>one</b> axis. Grid controls <b>two</b>.
+      Positioning removes an element from the conversation entirely. Learn when
+      to use which and layout stops being guesswork.
+    </p>
+    <div class="cluster" style="margin-block-start: var(--space-m);">
+      <span class="tag">Intermediate</span>
+      <span class="tag tag--2">≈ 3 sessions</span>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="crawl-stage holo" aria-hidden="true">
+      <div class="crawl">
+        <h3>Episode II</h3>
+        <p>THE LAYOUT WARS</p>
+        <p>It is a period of civil war. Rebel developers, striking from a hidden
+           branch, have won their first victory against the evil FLOAT-BASED
+           GRID SYSTEM.</p>
+        <p>During the battle, they secured plans to the ultimate weapon: a
+           two-dimensional layout engine with named areas and intrinsic sizing…</p>
+      </div>
+    </div>
+    <p class="dim center-text" style="margin-block-start: var(--space-2xs); font-size: var(--step--1);">
+      ↑ Built with <code class="inline">perspective</code>,
+      <code class="inline">rotateX()</code>, a <code class="inline">mask-image</code> fade,
+      and one <code class="inline">@keyframes</code>. Roughly 20 lines in
+      <code class="inline">theme-starwars.css</code>.
+    </p>
+  </section>
+
+  <div class="wrap section lesson-layout">
+
+    <nav class="toc" aria-label="On this page">
+      <p class="eyebrow">Contents</p>
+      <ol>
+        <li><a href="#flow">Normal flow</a></li>
+        <li><a href="#flex">Flexbox</a></li>
+        <li><a href="#grid">Grid</a></li>
+        <li><a href="#position">Positioning</a></li>
+        <li><a href="#responsive">Responsive</a></li>
+        <li><a href="#container">Container queries</a></li>
+        <li><a href="#build">What we build</a></li>
+      </ol>
+    </nav>
+
+    <div class="stack">
+
+      <!-- ================================================= FLOW -->
+      <section id="flow" class="prose">
+        <h2>01 — Normal flow, and choosing a tool</h2>
+        <p>
+          Before you reach for anything: block elements stack vertically and
+          fill their parent's width; inline elements sit in a line. Most of the
+          web is fine with that. Reach for a layout system only when normal
+          flow genuinely can't do the job.
+        </p>
+        <div class="table-scroll">
+          <table class="data">
+            <thead><tr><th>Need</th><th>Reach for</th></tr></thead>
+            <tbody>
+              <tr><td>Things in a row or column, sized by their content</td><td><code>display: flex</code></td></tr>
+              <tr><td>Rows <em>and</em> columns that line up across the whole layout</td><td><code>display: grid</code></td></tr>
+              <tr><td>A badge pinned to a corner, a sticky header, a modal</td><td><code>position</code></td></tr>
+              <tr><td>Text flowing around an image</td><td><code>float</code> (yes, still, only for this)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ================================================= FLEX -->
+      <section id="flex" class="prose">
+        <h2>02 — Flexbox: one axis</h2>
+        <p>
+          You set a <b>direction</b>, then you say how to distribute space
+          <b>along</b> that axis (<code class="inline">justify-content</code>)
+          and how to align <b>across</b> it (<code class="inline">align-items</code>).
+          Getting those two straight is 80% of flexbox.
+        </p>
+        <pre class="code">.toolbar {
+  <b>display</b>: <u>flex</u>;
+  <b>flex-direction</b>: <u>row</u>;            <i>/* main axis → horizontal */</i>
+  <b>justify-content</b>: <u>space-between</u>; <i>/* along the main axis */</i>
+  <b>align-items</b>: <u>center</u>;            <i>/* across it */</i>
+  <b>gap</b>: <u>1rem</u>;                      <i>/* never use margins for this */</i>
+  <b>flex-wrap</b>: <u>wrap</u>;                <i>/* let it break instead of overflow */</i>
+}</pre>
+        <div class="demo">
+          <span class="demo__label">justify-content on a row</span>
+          <div style="display:grid; gap:.75rem;">
+            <div style="display:flex; gap:.5rem; justify-content:flex-start; background:var(--surface); padding:.5rem; border-radius:4px;">
+              <div class="box-demo">A</div><div class="box-demo">B</div><div class="box-demo">C</div>
+            </div>
+            <div style="display:flex; gap:.5rem; justify-content:center; background:var(--surface); padding:.5rem; border-radius:4px;">
+              <div class="box-demo">A</div><div class="box-demo">B</div><div class="box-demo">C</div>
+            </div>
+            <div style="display:flex; gap:.5rem; justify-content:space-between; background:var(--surface); padding:.5rem; border-radius:4px;">
+              <div class="box-demo">A</div><div class="box-demo">B</div><div class="box-demo">C</div>
+            </div>
+          </div>
+        </div>
+        <h3>The three properties on the children</h3>
+        <pre class="code">.item {
+  <b>flex-grow</b>: <u>1</u>;     <i>/* take a share of leftover space */</i>
+  <b>flex-shrink</b>: <u>1</u>;   <i>/* give space back when cramped */</i>
+  <b>flex-basis</b>: <u>0</u>;    <i>/* starting size before grow/shrink */</i>
+
+  <i>/* Almost always written as the shorthand: */</i>
+  <b>flex</b>: <u>1</u>;          <i>/* = 1 1 0  → equal columns */</i>
+  <b>flex</b>: <u>auto</u>;       <i>/* = 1 1 auto → sized by content, then grows */</i>
+  <b>flex</b>: <u>none</u>;       <i>/* = 0 0 auto → never changes size */</i>
+}</pre>
+        <div class="note note--tip">
+          <strong>The push-it-right trick:</strong>
+          <code class="inline">margin-inline-start: auto</code> on one flex
+          child shoves it and everything after it to the end. That's how the
+          buttons in the lab toolbars sit on the right.
+        </div>
+      </section>
+
+      <!-- ================================================= GRID -->
+      <section id="grid" class="prose">
+        <h2>03 — Grid: two axes</h2>
+        <p>
+          Grid is the only layout tool that lets you align things across rows
+          <em>and</em> columns at once. The magic function is
+          <code class="inline">minmax()</code>, and the magic keyword is
+          <code class="inline">auto-fit</code>.
+        </p>
+        <pre class="code"><i>/* The responsive grid with no media query.
+   "As many columns as fit, each at least 260px, sharing space equally." */</i>
+.grid {
+  <b>display</b>: <u>grid</u>;
+  <b>gap</b>: <u>1.5rem</u>;
+  <b>grid-template-columns</b>: <u>repeat(auto-fit, minmax(min(260px, 100%), 1fr))</u>;
+}</pre>
+        <p>
+          The <code class="inline">min(260px, 100%)</code> is not decoration: it
+          stops the track from overflowing on a phone narrower than 260px.
+        </p>
+        <div class="demo">
+          <span class="demo__label">Resize this window — no media query is involved</span>
+          <div class="grid" style="--min: 150px;">
+            <div class="box-demo">1</div><div class="box-demo">2</div>
+            <div class="box-demo">3</div><div class="box-demo">4</div>
+            <div class="box-demo">5</div><div class="box-demo">6</div>
+          </div>
+        </div>
+        <h3>Named areas — layout you can read</h3>
+        <pre class="code">.console {
+  display: grid;
+  <b>grid-template-columns</b>: <u>200px 1fr</u>;
+  <b>grid-template-areas</b>:
+    <u>"nav    header"
+    "nav    main"
+    "nav    footer"</u>;
+}
+.console > nav    { <b>grid-area</b>: <u>nav</u>; }
+.console > header { <b>grid-area</b>: <u>header</u>; }
+.console > main   { <b>grid-area</b>: <u>main</u>; }</pre>
+        <div class="demo">
+          <span class="demo__label">The result</span>
+          <div style="display:grid; grid-template-columns:110px 1fr; grid-template-areas:'nav head' 'nav main' 'nav foot'; gap:.5rem;">
+            <div class="box-demo" style="grid-area:nav;">nav</div>
+            <div class="box-demo" style="grid-area:head;">header</div>
+            <div class="box-demo" style="grid-area:main; min-block-size:5rem;">main</div>
+            <div class="box-demo" style="grid-area:foot;">footer</div>
+          </div>
+        </div>
+        <div class="note">
+          <strong><code class="inline">place-items: center</code></strong> on a
+          grid container centres its children both ways. It is the shortest
+          honest answer to "how do I center a div".
+        </div>
+      </section>
+
+      <!-- ================================================= POSITION -->
+      <section id="position" class="prose">
+        <h2>04 — Positioning &amp; stacking</h2>
+        <div class="table-scroll">
+          <table class="data">
+            <thead><tr><th>Value</th><th>Behaviour</th></tr></thead>
+            <tbody>
+              <tr><td><code>static</code></td><td>The default. Ignores <code>top/left</code> entirely.</td></tr>
+              <tr><td><code>relative</code></td><td>Nudged from where it was, but keeps its space. Mostly used to become a <b>positioning context</b>.</td></tr>
+              <tr><td><code>absolute</code></td><td>Removed from flow. Positions against the nearest positioned ancestor.</td></tr>
+              <tr><td><code>fixed</code></td><td>Positions against the viewport. Stays put when you scroll.</td></tr>
+              <tr><td><code>sticky</code></td><td>Normal until it hits your <code>top</code> offset, then it sticks. Needs a scrollable ancestor.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <pre class="code">.panel { <b>position</b>: <u>relative</u>; }        <i>/* the anchor */</i>
+
+.panel .badge {
+  <b>position</b>: <u>absolute</u>;
+  <b>inset-block-start</b>: <u>-8px</u>;           <i>/* logical: "top" in LTR */</i>
+  <b>inset-inline-end</b>: <u>-8px</u>;            <i>/* logical: "right" in LTR */</i>
+  <b>z-index</b>: <u>2</u>;
+}
+
+<i>/* The header on this very page: */</i>
+.site-header { <b>position</b>: <u>sticky</u>; top: <u>0</u>; z-index: <u>50</u>; }</pre>
+        <div class="note note--warn">
+          <strong>z-index only works on positioned elements</strong> (or flex/grid
+          children). And a <code class="inline">transform</code>,
+          <code class="inline">filter</code>, or <code class="inline">opacity</code>
+          below 1 creates a new <b>stacking context</b> — your
+          <code class="inline">z-index: 9999</code> can only compete inside its
+          own context. That is why "z-index doesn't work" is nearly always an
+          ancestor's fault.
+        </div>
+      </section>
+
+      <!-- ================================================= RESPONSIVE -->
+      <section id="responsive" class="prose">
+        <h2>05 — Responsive design</h2>
+        <p>
+          Write the narrow layout first, then <b>add</b> at wider widths. Every
+          breakpoint should exist because the design broke there — never because
+          the number matches a phone you own.
+        </p>
+        <pre class="code"><i>/* mobile first: this is the default */</i>
+.layout { display: grid; gap: 1rem; }
+
+<i>/* enhance upward */</i>
+@media (<b>min-width</b>: 48rem) {
+  .layout { grid-template-columns: 220px 1fr; }
+}
+
+<i>/* query capability and preference, not just size */</i>
+@media (<b>prefers-reduced-motion</b>: reduce)   { * { animation: none !important; } }
+@media (<b>prefers-color-scheme</b>: dark)       { :root { --bg: #05070d; } }
+@media (<b>hover</b>: hover)                     { .card:hover { transform: translateY(-3px); } }</pre>
+        <div class="note note--tip">
+          <strong>Use <code class="inline">rem</code> in media queries,</strong>
+          not <code class="inline">px</code>. A student who bumps their browser
+          font size to 20px gets a layout that responds to that; a px breakpoint
+          ignores them.
+        </div>
+      </section>
+
+      <!-- ================================================= CONTAINER -->
+      <section id="container" class="prose">
+        <h2>06 — Container queries</h2>
+        <p>
+          A media query asks how wide the <b>window</b> is. A container query
+          asks how wide <b>this component's parent</b> is — which is the
+          question you actually wanted to ask. The same card can be wide in the
+          main column and narrow in a sidebar, with one stylesheet.
+        </p>
+        <pre class="code"><i>/* 1. declare an element as a container */</i>
+.card-slot {
+  <b>container-type</b>: <u>inline-size</u>;
+  <b>container-name</b>: <u>slot</u>;
+}
+
+<i>/* 2. query it — note "cq" units are relative to the container */</i>
+@container slot (min-width: 420px) {
+  .card { display: grid; grid-template-columns: 90px 1fr; }
+  .card h3 { font-size: <u>4cqi</u>; }
+}</pre>
+        <div class="note">
+          <strong>Support:</strong> container queries and
+          <code class="inline">:has()</code> are available in every current
+          browser. If you must support something older, keep them as a
+          progressive enhancement — the layout below the query should still be
+          usable.
+        </div>
+      </section>
+
+      <!-- ================================================= BUILD -->
+      <section id="build" class="prose">
+        <h2>07 — What we build together</h2>
+        <p>A ship's status console: a grid shell, a flex toolbar, absolutely
+           positioned badges, and bars driven by a custom property.</p>
+      </section>
+
+      <div class="holo">
+        <div class="cluster" style="justify-content: space-between;">
+          <p class="readout">NAV COMPUTER // ONLINE</p>
+          <div class="cluster">
+            <span class="tag">Hyperdrive</span>
+            <span class="tag tag--2">Shields 82%</span>
+          </div>
+        </div>
+        <div class="grid" style="--min: 210px; margin-block-start: var(--space-m);">
+          <div class="card" style="position: relative;">
+            <span class="tag" style="position:absolute; inset-block-start:-10px; inset-inline-end:12px;">LIVE</span>
+            <h3 style="font-size: var(--step-1);">Sublight</h3>
+            <p>Absolutely positioned badge, anchored to a relatively positioned card.</p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: var(--step-1);">Deflector</h3>
+            <p>Flex toolbar above, auto-fit grid here. Two systems, one component.</p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: var(--step-1);">Astromech</h3>
+            <p>Resize the window and nothing overflows — that is the whole test.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="note note--tip" style="margin-block-start: var(--space-xl);">
+        <strong>Your turn:</strong> labs <b>05–08</b> on the
+        <a href="exercises.html">Exercises page</a> are flexbox and grid drills.
+        Case studies <b>3</b> and <b>4</b> on the
+        <a href="code-review.html">Code Review page</a> show the float-and-margin
+        version of this layout being replaced.
+      </div>
+
+      <nav class="cluster" style="margin-block-start: var(--space-xl);">
+        <a class="btn btn--ghost" href="lesson-1-persona.html">← Module 1</a>
+        <a class="btn" href="lesson-3-baldursgate.html">Module 3 · Modern CSS →</a>
+      </nav>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><b>Module 2 · Layout.</b> Theme “Outer Rim” is an original CSS homage —
+      starfield, scanlines and crawl are all generated by gradients and
+      transforms. No film or game assets are used.</p>
+  </div>
+</footer>
+
+</body>
+</html>

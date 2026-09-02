@@ -1,0 +1,258 @@
+/* ==========================================================================
+   lab.css — styles for the two interactive teaching widgets:
+     .compare   the before/after code review viewer  (code-review.html)
+     .lab       the fill-in-the-blank exercise runner (exercises.html)
+   These are the only parts of the site that need JavaScript.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- COMPARE */
+
+.compare {
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-2);
+  overflow: clip;             /* keeps children inside the rounded corners */
+}
+
+.compare__head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--space-m);
+  border-block-end: var(--border-w) solid var(--border);
+}
+.compare__head h3 { font-size: var(--step-2); }
+.compare__head p  { color: var(--text-dim); font-size: var(--step--1); max-inline-size: 62ch; }
+
+/* Segmented control. role="tablist" in the HTML; these are real buttons. */
+.seg {
+  display: inline-flex;
+  padding: 3px;
+  gap: 3px;
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--surface);
+}
+.seg button {
+  padding: 0.35em 0.9em;
+  border: 0;
+  border-radius: calc(var(--radius) - 1px);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: var(--step--1);
+  font-family: var(--font-mono);
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.seg button:hover { color: var(--text); }
+.seg button[aria-selected="true"] { background-color: var(--accent); color: var(--bg); }
+
+/* The rendered result(s). In "split" mode this becomes two columns. */
+.compare__stage {
+  display: grid;
+  gap: 1px;
+  background-color: var(--border);
+  grid-template-columns: 1fr;
+}
+.compare__stage[data-view="split"] { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+
+.frame { background-color: var(--bg); }
+.frame__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em var(--space-s);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border-block-end: var(--border-w) solid var(--border);
+}
+.frame__label::before {
+  content: "";
+  inline-size: 8px; block-size: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+.frame--before .frame__label { color: var(--warn); }
+.frame--after  .frame__label { color: var(--ok); }
+.frame iframe {
+  inline-size: 100%;
+  block-size: var(--frame-h, 300px);
+  border: 0;
+  display: block;
+  background-color: #fff;
+}
+
+/* -- The diff ------------------------------------------------------------- */
+.compare__code { border-block-start: var(--border-w) solid var(--border); }
+
+.diff {
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  background-color: #0b0d12;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: #cbd2e0;
+  tab-size: 2;
+}
+.diff .line {
+  display: block;
+  padding-inline: 3.2ch var(--space-s);
+  white-space: pre;
+  position: relative;
+  border-inline-start: 3px solid transparent;
+}
+/* The +/- gutter marker is generated content, so it never gets copy-pasted
+   into a student's editor along with the code. */
+.diff .line::before {
+  content: attr(data-mark);
+  position: absolute;
+  inset-inline-start: 0.6ch;
+  color: rgb(255 255 255 / 0.35);
+}
+.diff .add {
+  background-color: rgb(74 222 128 / 0.12);
+  border-inline-start-color: var(--ok);
+  color: #d6f7e2;
+}
+.diff .del {
+  background-color: rgb(248 113 113 / 0.12);
+  border-inline-start-color: var(--err);
+  color: #f8d7d7;
+  opacity: 0.85;
+}
+.diff .ctx { color: #8b94a7; }
+
+.compare__notes {
+  padding: var(--space-m);
+  border-block-start: var(--border-w) solid var(--border);
+  font-size: var(--step--1);
+}
+.compare__notes h4 { font-family: var(--font-mono); font-size: 0.78rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent);
+  margin-block-end: var(--space-2xs); }
+.compare__notes li + li { margin-block-start: var(--space-3xs); }
+.compare__notes ul { padding-inline-start: 1.2em; color: var(--text-dim); }
+.compare__notes b { color: var(--text); }
+
+
+/* -------------------------------------------------------------------- LAB */
+
+.lab {
+  border: var(--border-w) solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-2);
+  overflow: clip;
+}
+
+.lab__head { padding: var(--space-m); border-block-end: var(--border-w) solid var(--border); }
+.lab__head h3 { font-size: var(--step-2); }
+.lab__head .cluster { margin-block-start: var(--space-2xs); }
+.lab__brief { margin-block-start: var(--space-2xs); color: var(--text-dim); font-size: var(--step--1); max-inline-size: 70ch; }
+
+.lab__body {
+  display: grid;
+  gap: 1px;
+  background-color: var(--border);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .lab__body { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+}
+
+.lab__pane { background-color: var(--bg); display: flex; flex-direction: column; min-inline-size: 0; }
+
+.lab__editor {
+  flex: 1;
+  min-block-size: 300px;
+  padding: var(--space-s);
+  border: 0;
+  resize: vertical;
+  background-color: #0b0d12;
+  color: #d7dbe6;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  tab-size: 2;
+  white-space: pre;      /* no soft wrapping — code stays on its own line */
+  overflow: auto;
+}
+.lab__editor:focus { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.lab__preview {
+  flex: 1;
+  inline-size: 100%;
+  min-block-size: 300px;
+  border: 0;
+  background-color: #fff;
+}
+
+.lab__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  align-items: center;
+  padding: var(--space-2xs) var(--space-s);
+  border-block-start: var(--border-w) solid var(--border);
+  background-color: var(--surface);
+}
+.lab__bar .spacer { margin-inline-start: auto; }
+.lab__bar .btn { padding: 0.4em 0.8em; font-size: 0.78rem; }
+
+/* -- Results checklist ---------------------------------------------------- */
+.lab__results {
+  padding: var(--space-s) var(--space-m);
+  border-block-start: var(--border-w) solid var(--border);
+  font-size: var(--step--1);
+}
+.checks { list-style: none; padding: 0; display: grid; gap: var(--space-3xs); }
+.checks li {
+  display: grid;
+  grid-template-columns: 1.4em 1fr;
+  gap: 0.5em;
+  align-items: start;
+  color: var(--text-dim);
+}
+.checks li::before { content: "○"; color: var(--text-dim); }
+.checks li.pass          { color: var(--text); }
+.checks li.pass::before  { content: "✔"; color: var(--ok); }
+.checks li.fail::before  { content: "✘"; color: var(--err); }
+.checks .why { display: block; font-family: var(--font-mono); font-size: 0.72rem; color: var(--err); }
+
+.scoreline {
+  display: flex; align-items: center; gap: 0.6em;
+  margin-block-end: var(--space-2xs);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.scoreline[data-state="pass"] { color: var(--ok); }
+.scoreline[data-state="fail"] { color: var(--warn); }
+.scoreline[data-state="idle"] { color: var(--text-dim); }
+
+/* The solution starts hidden; <details> gives us the toggle for free. */
+.solution { margin-block-start: var(--space-s); }
+.solution summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.solution summary:hover { color: var(--accent); }
+.solution pre.code { margin-block-start: var(--space-2xs); }
+
+.js-required {
+  padding: var(--space-s) var(--space-m);
+  border-inline-start: 4px solid var(--warn);
+  background-color: var(--surface);
+  font-size: var(--step--1);
+}

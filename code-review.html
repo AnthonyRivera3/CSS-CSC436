@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Review — CSS Walk-Alongs</title>
+<meta name="description" content="Five CSS case studies rendered before and after, with a real line-by-line diff between the two stylesheets.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔍</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/lab.css">
+</head>
+<body class="page">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">CSS</span> Walk-Alongs</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span>Home</span></a>
+      <a href="lesson-1-persona.html"><span>1 · Foundations</span></a>
+      <a href="lesson-2-starwars.html"><span>2 · Layout</span></a>
+      <a href="lesson-3-baldursgate.html"><span>3 · Modern</span></a>
+      <a href="code-review.html" aria-current="page"><span>Code Review</span></a>
+      <a href="exercises.html"><span>Exercises</span></a>
+      <a href="resources.html"><span>Resources</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero">
+    <p class="eyebrow">Review &amp; Refactor</p>
+    <h1>Same markup. Two stylesheets. Spot the difference.</h1>
+    <p class="lede">
+      Every case below renders <b>live, twice</b> — once with the CSS we
+      typically write first, once with the CSS after review — plus a real
+      line-by-line diff of the two stylesheets. Read the diff, then look back
+      at the two frames and connect each change to what it did.
+    </p>
+  </section>
+
+  <section class="wrap section">
+    <div class="prose">
+      <h2 class="mt-0">How to read this page</h2>
+      <ul>
+        <li><b>Diff</b> shows both renders side by side and the changes between the stylesheets. <span class="mono" style="color:var(--ok);">+ green</span> lines were added, <span class="mono" style="color:var(--err);">− red</span> lines were removed, grey lines are unchanged context, and <code class="inline">⋯</code> marks a run of unchanged lines that has been folded away.</li>
+        <li><b>Before</b> / <b>After</b> show one version on its own with its complete stylesheet, for when you want to read it top to bottom.</li>
+        <li>Every preview is a real sandboxed <code class="inline">&lt;iframe&gt;</code>. Right-click → <b>Inspect</b> works inside them. Do that.</li>
+      </ul>
+      <div class="note note--tip">
+        <strong>How we run this in class:</strong> the frames go up first with
+        the code hidden. You tell me what looks wrong and what you would change.
+        <em>Then</em> we open the diff and see how close you got.
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== CASE 1 -->
+  <section class="wrap section">
+    <article class="compare" data-compare="diff">
+      <header class="compare__head">
+        <div>
+          <div class="cluster"><span class="tag">Case 01</span><span class="tag tag--2">Layout</span></div>
+          <h3 style="margin-block-start:.4rem;">The card grid that only works at one window size</h3>
+          <p>Floats and a fixed pixel width. It looks perfect on the machine it
+             was written on, and falls apart everywhere else. Narrow both
+             frames by shrinking your window and watch which one survives.</p>
+        </div>
+        <div class="seg" data-seg role="tablist" aria-label="View">
+          <button data-view="before" role="tab" aria-selected="false">Before</button>
+          <button data-view="diff"   role="tab" aria-selected="true">Diff</button>
+          <button data-view="after"  role="tab" aria-selected="false">After</button>
+        </div>
+      </header>
+
+      <template data-html>
+        <div class="deck">
+          <article class="ship"><h3>T-65 X-wing</h3><p>Fast, fragile, iconic.</p></article>
+          <article class="ship"><h3>YT-1300 Freighter</h3><p>It has made point five past lightspeed.</p></article>
+          <article class="ship"><h3>TIE Interceptor</h3><p>No shields. No apologies.</p></article>
+        </div>
+      </template>
+
+      <template data-css-before>
+        .deck {
+          overflow: hidden;
+        }
+        .ship {
+          float: left;
+          width: 200px;
+          margin-right: 16px;
+          margin-bottom: 16px;
+          padding: 16px;
+          border: 1px solid #ccd;
+          background: #f6f7fb;
+        }
+        .ship h3 {
+          margin: 0 0 6px;
+          font-size: 17px;
+        }
+        .ship p {
+          margin: 0;
+          color: #555;
+          font-size: 14px;
+        }
+      </template>
+
+      <template data-css-after>
+        .deck {
+          display: grid;
+          gap: 16px;
+          grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+        }
+        .ship {
+          padding: 16px;
+          border: 1px solid #ccd;
+          border-radius: 8px;
+          background: #f6f7fb;
+        }
+        .ship h3 {
+          margin: 0 0 6px;
+          font-size: 1.0625rem;
+        }
+        .ship p {
+          margin: 0;
+          color: #555;
+          font-size: 0.875rem;
+        }
+      </template>
+
+      <div class="compare__stage" data-stage></div>
+      <div class="compare__code" data-code></div>
+
+      <div class="compare__notes">
+        <h4>What changed, and why</h4>
+        <ul>
+          <li><b>Floats → grid.</b> Floats were a hack for a problem grid solves directly. The <code class="inline">overflow: hidden</code> on the parent existed only to contain the floats; with grid it is not needed at all.</li>
+          <li><b><code class="inline">margin-right</code> → <code class="inline">gap</code>.</b> Margin puts a gutter after the <em>last</em> card too. <code class="inline">gap</code> only goes <em>between</em> items, and it never collapses.</li>
+          <li><b><code class="inline">width: 200px</code> → <code class="inline">minmax(min(200px, 100%), 1fr)</code>.</b> Cards are now <em>at least</em> 200px and share the leftover space. The <code class="inline">min(200px, 100%)</code> is the part that stops overflow on a phone narrower than 200px.</li>
+          <li><b>Equal heights, free.</b> Grid items stretch to their row by default. The floated version leaves ragged bottoms.</li>
+          <li><b><code class="inline">px</code> → <code class="inline">rem</code> for font sizes.</b> Now the component respects a reader who has set a larger default font size.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ==================================================== CASE 2 -->
+  <section class="wrap section">
+    <article class="compare" data-compare="diff">
+      <header class="compare__head">
+        <div>
+          <div class="cluster"><span class="tag">Case 02</span><span class="tag tag--2">Components &amp; a11y</span></div>
+          <h3 style="margin-block-start:.4rem;">The button that hates keyboards</h3>
+          <p>It looks fine. It is unusable without a mouse, it ignores the
+             page's font, and it has no disabled state. <b>Press Tab</b> inside
+             each frame and watch where focus goes.</p>
+        </div>
+        <div class="seg" data-seg role="tablist" aria-label="View">
+          <button data-view="before" role="tab" aria-selected="false">Before</button>
+          <button data-view="diff"   role="tab" aria-selected="true">Diff</button>
+          <button data-view="after"  role="tab" aria-selected="false">After</button>
+        </div>
+      </header>
+
+      <template data-html>
+        <p style="margin-bottom:14px;color:#555;font-size:14px;">Click into the frame, then press Tab.</p>
+        <button class="btn">Take Your Heart</button>
+        <button class="btn">Cancel</button>
+        <button class="btn" disabled>Unavailable</button>
+      </template>
+
+      <template data-css-before>
+        .btn {
+          background-color: #e60012;
+          color: #fff;
+          border: none;
+          outline: none;
+          padding: 10px 18px;
+          font-size: 14px;
+          margin-right: 8px;
+        }
+        .btn:hover {
+          background-color: #ff2233;
+        }
+      </template>
+
+      <template data-css-after>
+        .btn {
+          --btn-bg: #e60012;
+          background-color: var(--btn-bg);
+          color: #fff;
+          border: 1px solid transparent;
+          border-radius: 4px;
+          padding: 0.6em 1.1em;
+          font: inherit;
+          font-weight: 700;
+          margin-right: 8px;
+          cursor: pointer;
+          transition: background-color 180ms ease, transform 180ms ease;
+        }
+        .btn:hover {
+          background-color: color-mix(in srgb, var(--btn-bg) 82%, black);
+          transform: translateY(-1px);
+        }
+        .btn:focus-visible {
+          outline: 3px solid #1a73e8;
+          outline-offset: 2px;
+        }
+        .btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          transform: none;
+        }
+      </template>
+
+      <div class="compare__stage" data-stage></div>
+      <div class="compare__code" data-code></div>
+
+      <div class="compare__notes">
+        <h4>What changed, and why</h4>
+        <ul>
+          <li><b><code class="inline">outline: none</code> is deleted.</b> This is the single most damaging line in beginner CSS. It removes the only signal a keyboard user has about where they are. It is replaced by an explicit <code class="inline">:focus-visible</code> ring, which shows for keyboard focus and stays out of the way on mouse clicks.</li>
+          <li><b><code class="inline">font: inherit</code>.</b> Form controls do <em>not</em> inherit the page font. Without this line your button is rendered in the operating system's UI font while everything around it isn't.</li>
+          <li><b><code class="inline">cursor: pointer</code>.</b> Cheap, expected, missing.</li>
+          <li><b>A <code class="inline">:disabled</code> state.</b> The markup already had a disabled button; only the "after" stylesheet acknowledges it.</li>
+          <li><b>Hardcoded hover colour → <code class="inline">color-mix()</code>.</b> The hover shade is now derived from the base colour. Change <code class="inline">--btn-bg</code> once and every state follows.</li>
+          <li><b><code class="inline">px</code> padding → <code class="inline">em</code>.</b> Padding now scales with the button's own font size, so a large variant needs one declaration, not three.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ==================================================== CASE 3 -->
+  <section class="wrap section">
+    <article class="compare" data-compare="diff">
+      <header class="compare__head">
+        <div>
+          <div class="cluster"><span class="tag">Case 03</span><span class="tag tag--2">Centering</span></div>
+          <h3 style="margin-block-start:.4rem;">Centering that breaks the moment the text gets longer</h3>
+          <p>The absolute-position-and-translate trick works — until the content
+             is taller than the box you guessed at. Both frames have identical
+             text.</p>
+        </div>
+        <div class="seg" data-seg role="tablist" aria-label="View">
+          <button data-view="before" role="tab" aria-selected="false">Before</button>
+          <button data-view="diff"   role="tab" aria-selected="true">Diff</button>
+          <button data-view="after"  role="tab" aria-selected="false">After</button>
+        </div>
+      </header>
+
+      <template data-html>
+        <section class="hero">
+          <div class="hero__inner">
+            <h2>Welcome to the Hells</h2>
+            <p>A headline nobody measured, sitting in a container somebody guessed the height of. This is how overflow happens in production.</p>
+          </div>
+        </section>
+      </template>
+
+      <template data-css-before>
+        .hero {
+          position: relative;
+          height: 150px;
+          background: #1d1a2b;
+          color: #f3ecdc;
+        }
+        .hero__inner {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 320px;
+          text-align: center;
+        }
+        .hero h2 { margin: 0 0 8px; font-size: 22px; }
+        .hero p  { margin: 0; font-size: 14px; opacity: .85; }
+      </template>
+
+      <template data-css-after>
+        .hero {
+          display: grid;
+          place-items: center;
+          min-height: 150px;
+          padding: 24px;
+          background: #1d1a2b;
+          color: #f3ecdc;
+        }
+        .hero__inner {
+          max-width: 42ch;
+          text-align: center;
+        }
+        .hero h2 { margin: 0 0 8px; font-size: 1.375rem; }
+        .hero p  { margin: 0; font-size: 0.875rem; opacity: .85; }
+      </template>
+
+      <div class="compare__stage" data-stage></div>
+      <div class="compare__code" data-code></div>
+
+      <div class="compare__notes">
+        <h4>What changed, and why</h4>
+        <ul>
+          <li><b><code class="inline">height</code> → <code class="inline">min-height</code>.</b> This is the actual bug. A fixed height is a promise the content cannot keep. <code class="inline">min-height</code> says "at least this tall, and grow if you must".</li>
+          <li><b>Absolute positioning → <code class="inline">place-items: center</code>.</b> Two words replace five declarations, and the element stays in normal flow — so it can push the parent taller instead of spilling out of it.</li>
+          <li><b><code class="inline">width: 320px</code> → <code class="inline">max-width: 42ch</code>.</b> A reading measure instead of an arbitrary number, and it shrinks on narrow screens instead of forcing a horizontal scrollbar.</li>
+          <li><b><code class="inline">padding</code> added.</b> Once the box can grow, padding guarantees the text never touches the edge.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- ==================================================== CASE 4 -->
+  <section class="wrap section">
+    <article class="compare" data-compare="diff">
+      <header class="compare__head">
+        <div>
+          <div class="cluster"><span class="tag">Case 04</span><span class="tag tag--2">Cascade</span></div>
+          <h3 style="margin-block-start:.4rem;">The <code class="inline" style="font-size:.85em;">!important</code> war</h3>
+          <p>The current page's link is supposed to be highlighted. In the
+             "before" frame it simply isn't — and no amount of extra CSS on
+             <code class="inline">.is-current</code> will fix it. This is a
+             cascade problem, not a styling problem.</p>
+        </div>
+        <div class="seg" data-seg role="tablist" aria-label="View">
+          <button data-view="before" role="tab" aria-selected="false">Before</button>
+          <button data-view="diff"   role="tab" aria-selected="true">Diff</button>
+          <button data-view="after"  role="tab" aria-selected="false">After</button>
+        </div>
+      </header>
+
+      <template data-html>
+        <nav id="nav" class="nav">
+          <a href="#">Home</a>
+          <a href="#" class="is-current" aria-current="page">Modules</a>
+          <a href="#">Resources</a>
+        </nav>
+        <p style="margin-top:16px;font-size:14px;color:#666;">“Modules” is the current page. Is it highlighted?</p>
+      </template>
+
+      <template data-css-before>
+        #nav {
+          display: flex;
+          gap: 12px;
+        }
+        #nav a {
+          color: #888 !important;
+          text-decoration: none;
+          font-size: 15px;
+        }
+        .is-current {
+          color: #e60012;
+          font-weight: 700;
+        }
+      </template>
+
+      <template data-css-after>
+        @layer base, state;
+
+        @layer base {
+          .nav {
+            display: flex;
+            gap: 12px;
+          }
+          .nav a {
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9375rem;
+          }
+        }
+
+        @layer state {
+          .nav a[aria-current="page"] {
+            color: #e60012;
+            font-weight: 700;
+          }
+        }
+      </template>
+
+      <div class="compare__stage" data-stage></div>
+      <div class="compare__code" data-code></div>
+
+      <div class="compare__notes">
+        <h4>What changed, and why</h4>
+        <ul>
+          <li><b>The <code class="inline">!important</code> is gone.</b> It was beating <code class="inline">.is-current</code> outright. Nothing you write in a normal declaration can win against it — you would have had to escalate with a second <code class="inline">!important</code>, and now you have a war.</li>
+          <li><b>Id selector → class.</b> <code class="inline">#nav a</code> scores 1,0,1. That single id makes the rule harder to override than any reasonable class combination, which is exactly what tempted someone to add <code class="inline">!important</code> in the first place.</li>
+          <li><b><code class="inline">.is-current</code> → <code class="inline">[aria-current="page"]</code>.</b> The accessible attribute is already in the markup and already tells assistive technology which link is current. Styling from it removes a duplicate source of truth that can drift.</li>
+          <li><b><code class="inline">@layer</code> declares intent.</b> <code class="inline">state</code> comes after <code class="inline">base</code>, so state rules win — regardless of specificity, forever. New base rules can never accidentally out-specify a state.</li>
+        </ul>
+        <p class="dim" style="margin-block-start:var(--space-2xs);font-size:.8rem;">
+          The demo markup carries <em>both</em> the id and the class so the same
+          HTML can be styled by either stylesheet. In real code you would drop
+          the id and the <code class="inline">is-current</code> class along with
+          the old CSS.
+        </p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ==================================================== CASE 5 -->
+  <section class="wrap section">
+    <article class="compare" data-compare="diff">
+      <header class="compare__head">
+        <div>
+          <div class="cluster"><span class="tag">Case 05</span><span class="tag tag--2">Motion</span></div>
+          <h3 style="margin-block-start:.4rem;">Animation that makes the browser do too much work</h3>
+          <p>Both bars animate. Only one of them can be handed to the
+             compositor — the other forces a full layout pass on every single
+             frame. Hover the panels too.</p>
+        </div>
+        <div class="seg" data-seg role="tablist" aria-label="View">
+          <button data-view="before" role="tab" aria-selected="false">Before</button>
+          <button data-view="diff"   role="tab" aria-selected="true">Diff</button>
+          <button data-view="after"  role="tab" aria-selected="false">After</button>
+        </div>
+      </header>
+
+      <template data-html>
+        <div class="panel">
+          <h3>Loading the Weave</h3>
+          <div class="track"><div class="bar"></div></div>
+        </div>
+      </template>
+
+      <template data-css-before>
+        .panel {
+          padding: 16px;
+          border: 1px solid #d9cdb0;
+          background: #f7efdd;
+          transition: all 400ms;
+        }
+        .panel:hover {
+          margin-left: 12px;
+          box-shadow: 0 8px 20px rgba(90, 70, 30, 0.25);
+        }
+        .panel h3 { margin: 0 0 10px; font-size: 1rem; }
+        .track {
+          height: 10px;
+          background: #e3d6b8;
+          border-radius: 999px;
+          overflow: hidden;
+        }
+        .bar {
+          height: 100%;
+          width: 20%;
+          background: linear-gradient(90deg, #8a1c1c, #a67c22);
+          animation: grow 1.8s ease-in-out infinite alternate;
+        }
+        @keyframes grow {
+          to { width: 90%; }
+        }
+      </template>
+
+      <template data-css-after>
+        .panel {
+          padding: 16px;
+          border: 1px solid #d9cdb0;
+          background: #f7efdd;
+          transition: transform 200ms ease, box-shadow 200ms ease;
+        }
+        .panel:hover {
+          transform: translateX(12px);
+          box-shadow: 0 8px 20px rgba(90, 70, 30, 0.25);
+        }
+        .panel h3 { margin: 0 0 10px; font-size: 1rem; }
+        .track {
+          height: 10px;
+          background: #e3d6b8;
+          border-radius: 999px;
+          overflow: hidden;
+        }
+        .bar {
+          height: 100%;
+          width: 100%;
+          transform: scaleX(0.2);
+          transform-origin: left center;
+          background: linear-gradient(90deg, #8a1c1c, #a67c22);
+          animation: grow 1.8s ease-in-out infinite alternate;
+        }
+        @keyframes grow {
+          to { transform: scaleX(0.9); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .bar { animation: none; transform: scaleX(0.9); }
+        }
+      </template>
+
+      <div class="compare__stage" data-stage></div>
+      <div class="compare__code" data-code></div>
+
+      <div class="compare__notes">
+        <h4>What changed, and why</h4>
+        <ul>
+          <li><b><code class="inline">transition: all</code> → a named list.</b> <code class="inline">all</code> transitions properties you never intended, including ones added later by a different developer. It is also the reason for surprise animations on page load.</li>
+          <li><b><code class="inline">margin-left</code> → <code class="inline">translateX()</code>.</b> Animating a margin re-runs layout for the element <em>and its siblings</em> 60 times a second. A transform is composited: no layout, no paint.</li>
+          <li><b>Animating <code class="inline">width</code> → <code class="inline">scaleX()</code>.</b> Same reason. Set the element to full width, then scale it — <code class="inline">transform-origin: left</code> makes it grow from the correct edge.</li>
+          <li><b>A <code class="inline">prefers-reduced-motion</code> block.</b> The bar still communicates progress; it just stops moving for anyone who has asked their OS for less motion.</li>
+        </ul>
+        <p class="dim" style="margin-block-start:var(--space-2xs);font-size:.8rem;">
+          To see the cost yourself: DevTools → <b>Performance</b> → record a few
+          seconds over each frame. The "before" timeline is full of purple
+          Layout bars; the "after" one is nearly empty.
+        </p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ==================================================== CHECKLIST -->
+  <section class="wrap section">
+    <div class="prose">
+      <h2 class="mt-0">The review checklist</h2>
+      <p>Run your own stylesheet past this before you call anything finished.
+         It is the same list I will use on your work.</p>
+      <div class="table-scroll">
+        <table class="data">
+          <thead><tr><th>Ask</th><th>Smell</th><th>Fix</th></tr></thead>
+          <tbody>
+            <tr><td>Does it survive a 320px screen?</td><td>Fixed <code>width</code>, no wrap</td><td><code>max-width</code>, <code>minmax(min(…))</code>, <code>flex-wrap</code></td></tr>
+            <tr><td>Can I use it with a keyboard?</td><td><code>outline: none</code></td><td><code>:focus-visible</code> with a visible ring</td></tr>
+            <tr><td>Why is this value <em>this</em> number?</td><td>Magic numbers: <code>37px</code>, <code>1337</code></td><td>A token, or a comment saying why</td></tr>
+            <tr><td>Am I fighting the cascade?</td><td><code>!important</code>, id selectors</td><td>Flat classes, <code>@layer</code>, <code>:where()</code></td></tr>
+            <tr><td>Will this animate smoothly?</td><td>Animating <code>width</code>, <code>top</code>, <code>margin</code></td><td><code>transform</code> and <code>opacity</code> only</td></tr>
+            <tr><td>Does spacing come from one place?</td><td>Margins on children, collapsing</td><td><code>gap</code>, or the <code>&gt; * + *</code> pattern</td></tr>
+            <tr><td>Is the colour contrast sufficient?</td><td>Grey on grey</td><td>4.5:1 for body text — DevTools shows the ratio</td></tr>
+            <tr><td>Does it respect user settings?</td><td>No motion or colour-scheme queries</td><td><code>prefers-reduced-motion</code>, <code>prefers-color-scheme</code></td></tr>
+            <tr><td>Would a rebrand mean edits everywhere?</td><td>Hex codes repeated 40 times</td><td>Custom properties on <code>:root</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Add your own case study</h2>
+      <p>
+        Each case on this page is one <code class="inline">&lt;article&gt;</code>
+        with three <code class="inline">&lt;template&gt;</code> tags. Copy any
+        block, swap the contents, and the diff and both previews generate
+        themselves — there is nothing else to wire up.
+      </p>
+      <pre class="code">&lt;article class="compare" <b>data-compare</b>="diff"&gt;
+  &lt;header class="compare__head"&gt;…<i>title, blurb, and the Before/Diff/After buttons</i>…&lt;/header&gt;
+
+  &lt;template <b>data-html</b>&gt;        <i>&lt;!-- markup, shared by both versions --&gt;</i>
+    &lt;div class="thing"&gt;…&lt;/div&gt;
+  &lt;/template&gt;
+
+  &lt;template <b>data-css-before</b>&gt;  <i>/* the first draft */</i>
+    .thing { float: left; }
+  &lt;/template&gt;
+
+  &lt;template <b>data-css-after</b>&gt;   <i>/* after review */</i>
+    .thing { display: grid; }
+  &lt;/template&gt;
+
+  &lt;div class="compare__stage" <b>data-stage</b>&gt;&lt;/div&gt;  <i>&lt;!-- previews land here --&gt;</i>
+  &lt;div class="compare__code"  <b>data-code</b>&gt;&lt;/div&gt;   <i>&lt;!-- the diff lands here --&gt;</i>
+&lt;/article&gt;</pre>
+      <div class="note">
+        <strong>Assignment:</strong> bring one case study of your own to the
+        next session — a piece of CSS you wrote, and the reviewed version.
+        You present the "before" frame and the class calls the problems.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><b>Code Review.</b> Previews run in sandboxed iframes; the diff is a real
+      LCS line diff computed in <code class="inline">assets/js/compare.js</code>.</p>
+  </div>
+</footer>
+
+<script src="assets/js/sandbox.js"></script>
+<script src="assets/js/compare.js"></script>
+</body>
+</html>

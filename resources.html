@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources — CSS Walk-Alongs</title>
+<meta name="description" content="Where to get fonts in 2026, which premade CSS to pull in and test, where to practise, and the reference sites worth bookmarking.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+</head>
+<body class="page">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">CSS</span> Walk-Alongs</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span>Home</span></a>
+      <a href="lesson-1-persona.html"><span>1 · Foundations</span></a>
+      <a href="lesson-2-starwars.html"><span>2 · Layout</span></a>
+      <a href="lesson-3-baldursgate.html"><span>3 · Modern</span></a>
+      <a href="code-review.html"><span>Code Review</span></a>
+      <a href="exercises.html"><span>Exercises</span></a>
+      <a href="resources.html" aria-current="page"><span>Resources</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero">
+    <p class="eyebrow">Reference</p>
+    <h1>Where to get the good stuff.</h1>
+    <p class="lede">
+      Fonts, premade CSS you can drop in and test, places to practise, and the
+      handful of reference sites actually worth having open while you work.
+      Everything here is free unless it says otherwise.
+    </p>
+  </section>
+
+  <section class="wrap section">
+    <nav class="cluster" aria-label="Sections">
+      <a class="btn btn--ghost" href="#fonts">Fonts</a>
+      <a class="btn btn--ghost" href="#using-fonts">Using a font</a>
+      <a class="btn btn--ghost" href="#premade">Premade CSS</a>
+      <a class="btn btn--ghost" href="#generators">Generators</a>
+      <a class="btn btn--ghost" href="#practice">Practice</a>
+      <a class="btn btn--ghost" href="#reference">Reference</a>
+      <a class="btn btn--ghost" href="#tools">Tools</a>
+    </nav>
+  </section>
+
+  <!-- ================================================================ FONTS -->
+  <section class="wrap section" id="fonts">
+    <h2 style="font-size: var(--step-4);">Where to get fonts</h2>
+    <p class="dim" style="margin-block: var(--space-2xs) var(--space-l); max-inline-size: 68ch;">
+      The single most effective thing a beginner can do to make a page look
+      designed is to stop using the default font. Start at the top of this
+      list.
+    </p>
+
+    <h3 style="font-size: var(--step-2); margin-block-end: var(--space-s);">Free libraries</h3>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Source</th><th>What it is</th><th>Use it when</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><a href="https://fonts.google.com">Google Fonts</a></td>
+            <td>~1,800 open-source families, hosted or downloadable. All the fonts on this site come from here.</td>
+            <td>Default answer. Fastest path from "I need a font" to a working page.</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.fontshare.com">Fontshare</a></td>
+            <td>A free library from the Indian Type Foundry. Much more contemporary than Google's catalogue.</td>
+            <td>You want something that doesn't look like every other portfolio.</td>
+          </tr>
+          <tr>
+            <td><a href="https://fontsource.org">Fontsource</a></td>
+            <td>Open-source fonts packaged for npm, so they get bundled and self-hosted automatically.</td>
+            <td>You are in a build-tool project (Vite, Next, Astro) and want no third-party requests.</td>
+          </tr>
+          <tr>
+            <td><a href="https://fonts.bunny.net">Bunny Fonts</a></td>
+            <td>A drop-in, GDPR-friendly mirror of Google Fonts. Change the URL, keep the CSS.</td>
+            <td>You need to avoid Google as a third party — this is a real legal issue in the EU.</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.fontsquirrel.com">Font Squirrel</a></td>
+            <td>Hand-checked free-for-commercial-use fonts, plus a webfont generator.</td>
+            <td>You have a desktop font file and need web formats.</td>
+          </tr>
+          <tr>
+            <td><a href="https://velvetyne.fr">Velvetyne</a> &amp; <a href="https://usemodify.com">Use &amp; Modify</a></td>
+            <td>Experimental libre type foundries. Weird, expressive, free.</td>
+            <td>A display face with genuine personality — like the ones these game themes want.</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.theleagueofmoveabletype.com">The League of Moveable Type</a></td>
+            <td>The original open-source foundry. Small, reliable, well-drawn.</td>
+            <td>Solid workhorse faces with a permissive licence.</td>
+          </tr>
+          <tr>
+            <td><a href="https://fonts.adobe.com">Adobe Fonts</a></td>
+            <td>Thousands of commercial families, included with any Creative Cloud plan.</td>
+            <td>Your school or workplace already pays for CC.</td>
+          </tr>
+          <tr>
+            <td><a href="https://www.fontspring.com">Fontspring</a> · <a href="https://www.myfonts.com">MyFonts</a> · <a href="https://klim.co.nz">Klim</a> · <a href="https://pangrampangram.com">Pangram Pangram</a></td>
+            <td>Paid retail foundries. One-time licence, no subscription.</td>
+            <td>Real client work with a type budget. Read the licence — web use is often priced by pageviews.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size: var(--step-2); margin-block: var(--space-xl) var(--space-s);">Choosing and pairing</h3>
+    <div class="grid" style="--min: 250px;">
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://www.typewolf.com">Typewolf</a></h3>
+        <p>Real sites, with the fonts identified. The best way to learn what pairings actually work in the wild.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://fontjoy.com">Fontjoy</a></h3>
+        <p>Generates pairings by contrast. Useful for breaking out of a rut, not for final decisions.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://v-fonts.com">v-fonts</a></h3>
+        <p>A catalogue of variable fonts. One file, every weight — usually smaller than shipping three static weights.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://www.programmingfonts.org">Programming Fonts</a></h3>
+        <p>Try every monospace font in a live code editor. For your editor and for <code class="inline">--font-mono</code>.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://type-scale.com">Type Scale</a> &amp; <a href="https://utopia.fyi">Utopia</a></h3>
+        <p>Generate a harmonious size scale. Utopia outputs the fluid <code class="inline">clamp()</code> values used in <code class="inline">base.css</code>.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Icons, while we're here</h3>
+        <p><a href="https://lucide.dev">Lucide</a>, <a href="https://phosphoricons.com">Phosphor</a>, <a href="https://tabler.io/icons">Tabler</a>, <a href="https://heroicons.com">Heroicons</a>. All free, all SVG, all styleable with <code class="inline">currentColor</code>.</p>
+      </div>
+    </div>
+
+    <div class="note note--warn" style="margin-block-start: var(--space-l);">
+      <strong>Licences are not optional.</strong> Most free fonts use the
+      <b>SIL Open Font License</b>: use it anywhere, including commercially,
+      but you may not sell the font itself and any modified version must keep
+      the licence. "Free for personal use" means <em>not</em> for your client
+      work. Check before you ship, not after.
+    </div>
+  </section>
+
+  <!-- ========================================================= USING FONTS -->
+  <section class="wrap section" id="using-fonts">
+    <div class="prose">
+      <h2 class="mt-0">Actually putting a font on the page</h2>
+
+      <h3>Option A — the hosted link (what this repo does)</h3>
+      <p>Paste the <code class="inline">&lt;link&gt;</code> from the font site
+         into your <code class="inline">&lt;head&gt;</code>, above your own
+         stylesheet:</p>
+      <pre class="code">&lt;link rel="<b>preconnect</b>" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="<b>preconnect</b>" href="https://fonts.gstatic.com" crossorigin&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;<b>display=swap</b>" rel="stylesheet"&gt;</pre>
+      <p>Then use it, always with fallbacks:</p>
+      <pre class="code">:root { --font-display: <u>"Archivo Black", Impact, sans-serif</u>; }</pre>
+      <ul>
+        <li><b><code class="inline">preconnect</code></b> opens the network connection early — worth roughly 100ms.</li>
+        <li><b><code class="inline">display=swap</code></b> shows your fallback immediately and swaps when the webfont arrives. Without it the text is invisible while the font loads.</li>
+        <li><b>Request only the weights you use.</b> <code class="inline">wght@400;700</code>, not the whole family. Every extra weight is another file.</li>
+      </ul>
+
+      <h3>Option B — self-hosting</h3>
+      <p>Faster, private, and works offline. Download the
+         <code class="inline">.woff2</code> files into
+         <code class="inline">assets/fonts/</code> and declare them yourself:</p>
+      <pre class="code"><b>@font-face</b> {
+  <b>font-family</b>: <u>"Archivo Black"</u>;
+  <b>src</b>: url("../fonts/archivo-black.woff2") format(<u>"woff2"</u>);
+  <b>font-weight</b>: <u>400</u>;
+  <b>font-display</b>: <u>swap</u>;
+}
+
+<i>/* A variable font: one file covers the whole weight range. */</i>
+<b>@font-face</b> {
+  font-family: "Inter var";
+  src: url("../fonts/inter-var.woff2") format("woff2-variations");
+  <b>font-weight</b>: <u>100 900</u>;   <i>/* a range, not a number */</i>
+  font-display: swap;
+}</pre>
+      <div class="note note--tip">
+        <strong>Ship <code class="inline">woff2</code> and nothing else.</strong>
+        Every browser in current use supports it, and it is the smallest
+        format. <code class="inline">ttf</code> and <code class="inline">otf</code>
+        on the web are wasted bytes.
+      </div>
+
+      <h3>Swapping the font in this repo</h3>
+      <p>
+        Change two things and the whole page follows, because every component
+        reads the token rather than naming a font directly:
+      </p>
+      <pre class="code"><i>/* 1. the &lt;link&gt; in the page's &lt;head&gt; */</i>
+<i>/* 2. one line in the theme file: */</i>
+:root { <u>--font-display</u>: "Your New Font", Georgia, serif; }</pre>
+    </div>
+  </section>
+
+  <!-- ============================================================== PREMADE -->
+  <section class="wrap section" id="premade">
+    <h2 style="font-size: var(--step-4);">Premade CSS worth testing</h2>
+    <p class="dim" style="margin-block: var(--space-2xs) var(--space-l); max-inline-size: 68ch;">
+      Pull one of these into a scratch page, look at what it gives you for
+      free, then open DevTools and read how it did it. Reading other people's
+      CSS is how you get faster.
+    </p>
+
+    <h3 style="font-size: var(--step-2); margin-block-end: var(--space-s);">Classless — style semantic HTML with zero classes</h3>
+    <p class="dim" style="margin-block-end: var(--space-s); max-inline-size: 68ch;">
+      Add one stylesheet and plain HTML looks good immediately. The best way to
+      start a demo, and a great way to see what a design system decides for you.
+    </p>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Library</th><th>Size</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://picocss.com">Pico.css</a></td><td>~10kb</td><td>The best-looking of the bunch. Has a class-light mode and dark mode built in.</td></tr>
+          <tr><td><a href="https://simplecss.org">Simple.css</a></td><td>~4kb</td><td>One file, no build, very readable source. Good to study.</td></tr>
+          <tr><td><a href="https://watercss.kognise.dev">Water.css</a></td><td>~2kb</td><td>Minimal. Drop it on a prototype and move on.</td></tr>
+          <tr><td><a href="https://andybrewer.github.io/mvp/">MVP.css</a></td><td>~7kb</td><td>Opinionated components for landing pages.</td></tr>
+          <tr><td><a href="https://newcss.net">new.css</a></td><td>~5kb</td><td>Deliberately plain, in a nice way.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size: var(--step-2); margin-block: var(--space-xl) var(--space-s);">Frameworks &amp; component kits</h3>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Library</th><th>Approach</th><th>Worth knowing because</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://tailwindcss.com">Tailwind CSS</a></td><td>Utility classes</td><td>The industry default right now. Learn the underlying CSS first or you will be helpless without it.</td></tr>
+          <tr><td><a href="https://open-props.style">Open Props</a></td><td>A box of custom properties</td><td>Tokens only, no components. Closest in spirit to how <code>base.css</code> is built — steal its scales.</td></tr>
+          <tr><td><a href="https://bulma.io">Bulma</a></td><td>Class-based components</td><td>Pure CSS, no JavaScript, very readable class names.</td></tr>
+          <tr><td><a href="https://getbootstrap.com">Bootstrap</a></td><td>Components + JS</td><td>Still everywhere in enterprise work. You will meet it.</td></tr>
+          <tr><td><a href="https://daisyui.com">DaisyUI</a></td><td>Components on top of Tailwind</td><td>Gives Tailwind actual component names, with themes.</td></tr>
+          <tr><td><a href="https://ui.shadcn.com">shadcn/ui</a></td><td>Copy-paste React components</td><td>You own the code rather than a dependency. The current fashion, for good reasons.</td></tr>
+          <tr><td><a href="https://every-layout.dev">Every Layout</a></td><td>Layout primitives</td><td>Not a library — a way of thinking. <code>.stack</code> and <code>.cluster</code> in this repo come from it.</td></tr>
+          <tr><td><a href="https://github.com/sindresorhus/modern-normalize">modern-normalize</a></td><td>A reset</td><td>The maintained baseline if you don't want to write your own.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prose" style="margin-block-start: var(--space-xl);">
+      <h3>Testing a library inside this repo, safely</h3>
+      <p>
+        Drop it into a <b>low cascade layer</b>. Your own CSS then wins every
+        conflict without a single <code class="inline">!important</code>:
+      </p>
+      <pre class="code"><i>/* at the very top of your stylesheet */</i>
+<b>@layer</b> <u>vendor, base, components, theme, utilities</u>;
+
+<b>@import</b> url("https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css") <b>layer(vendor)</b>;
+
+<b>@layer</b> base {
+  <i>/* your rules beat everything in vendor, no matter how specific they are */</i>
+}</pre>
+      <div class="note note--warn">
+        <strong>Two rules for third-party CSS in this course:</strong> never add
+        a library to solve something you have not tried to solve yourself
+        first, and never add one you have not opened and read.
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== GENERATORS -->
+  <section class="wrap section" id="generators">
+    <h2 style="font-size: var(--step-4);">Generators &amp; copy-paste snippets</h2>
+    <p class="dim" style="margin-block: var(--space-2xs) var(--space-l); max-inline-size: 68ch;">
+      For when you know what you want and don't want to hand-compute a
+      <code class="inline">cubic-bezier</code>. Paste the output, then read it
+      until you understand it.
+    </p>
+    <div class="grid" style="--min: 240px;">
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Backgrounds</h3>
+        <p><a href="https://www.magicpattern.design/tools/css-backgrounds">MagicPattern</a>,
+           <a href="https://haikei.app">Haikei</a> (SVG blobs and waves),
+           <a href="https://cssgradient.io">CSS Gradient</a>,
+           <a href="https://www.joshwcomeau.com/gradient-generator/">Comeau's gradient generator</a> (interpolates in better colour spaces).</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Shadows &amp; depth</h3>
+        <p><a href="https://shadows.brumm.af">Smooth Shadow</a> for layered, realistic shadows.
+           <a href="https://neumorphism.io">Neumorphism.io</a> if you must.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Shapes</h3>
+        <p><a href="https://bennettfeely.com/clippy/">Clippy</a> for <code class="inline">clip-path</code> polygons —
+           this is how the Persona slashes and the BG3 dice were made.
+           <a href="https://css-generators.com">css-generators.com</a> for far more advanced shapes.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Motion</h3>
+        <p><a href="https://cubic-bezier.com">cubic-bezier.com</a>,
+           <a href="https://easings.net">easings.net</a>,
+           <a href="https://animate.style">Animate.css</a>,
+           <a href="https://css-loaders.com">CSS Loaders</a> — a few hundred spinners, single-element.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Whole components</h3>
+        <p><a href="https://uiverse.io">Uiverse.io</a> (community CSS components),
+           <a href="https://hyperui.dev">HyperUI</a> (free Tailwind blocks),
+           <a href="https://flowbite.com">Flowbite</a>.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Colour</h3>
+        <p><a href="https://coolors.co">Coolors</a>,
+           <a href="https://oklch.com">oklch.com</a> (the modern colour picker),
+           <a href="https://www.happyhues.co">Happy Hues</a> (palettes shown in context),
+           <a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ PRACTICE -->
+  <section class="wrap section" id="practice">
+    <h2 style="font-size: var(--step-4);">Practice &amp; exercises</h2>
+    <p class="dim" style="margin-block: var(--space-2xs) var(--space-l); max-inline-size: 68ch;">
+      Start with the <a href="exercises.html">ten labs in this repo</a>, which
+      follow our syllabus exactly. These are where to go next.
+    </p>
+
+    <h3 style="font-size: var(--step-2); margin-block-end: var(--space-s);">Games — free, and genuinely effective</h3>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Game</th><th>Teaches</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://flexboxfroggy.com">Flexbox Froggy</a></td><td>Every flexbox property, in 24 levels</td><td>~30 min</td></tr>
+          <tr><td><a href="https://cssgridgarden.com">Grid Garden</a></td><td>Grid lines, spans and areas</td><td>~30 min</td></tr>
+          <tr><td><a href="https://flukeout.github.io">CSS Diner</a></td><td>Selectors, from <code>div</code> to <code>:nth-child</code></td><td>~20 min</td></tr>
+          <tr><td><a href="http://www.flexboxdefense.com">Flexbox Defense</a></td><td>Flexbox alignment, as tower defence</td><td>~20 min</td></tr>
+          <tr><td><a href="https://codingfantasy.com">Coding Fantasy</a></td><td>Flexbox and Grid as an RPG</td><td>A few hours</td></tr>
+          <tr><td><a href="https://cssbattle.dev">CSSBattle</a></td><td>Code golf: match a target image in as few bytes as possible</td><td>Endless</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="font-size: var(--step-2); margin-block: var(--space-xl) var(--space-s);">Build-a-real-thing challenges</h3>
+    <div class="grid" style="--min: 250px;">
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://www.frontendmentor.io">Frontend Mentor</a></h3>
+        <p>Professional designs to build from, with the assets provided. The free tier is generous. <b>This is the single best next step after this course</b> — do three of them and you have a portfolio.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://100dayscss.com">100 Days CSS</a></h3>
+        <p>One small visual challenge a day. Excellent for animation practice.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://www.codewell.cc">Codewell</a></h3>
+        <p>Free Figma-based templates to rebuild. Similar to Frontend Mentor, different catalogue.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://cssgradient.io/blog/css-selector-cheatsheet/">Selector drills</a> &amp; <a href="https://codepen.io/challenges">CodePen Challenges</a></h3>
+        <p>Monthly prompts with a community gallery. Good for seeing many solutions to one problem.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://www.freecodecamp.org/learn/2022/responsive-web-design/">freeCodeCamp</a></h3>
+        <p>The full Responsive Web Design certification, free, with automated tests — the same idea as our labs, at much greater length.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);"><a href="https://scrimba.com">Scrimba</a></h3>
+        <p>Interactive screencasts you can pause and edit inline. Some free courses, some paid.</p>
+      </div>
+    </div>
+
+    <div class="note note--tip" style="margin-block-start: var(--space-l);">
+      <strong>How to practise so it sticks:</strong> rebuild something you have
+      already built, from scratch, without looking at your old code. The second
+      attempt is where the learning happens — the first was just transcription.
+    </div>
+  </section>
+
+  <!-- =========================================================== REFERENCE -->
+  <section class="wrap section" id="reference">
+    <h2 style="font-size: var(--step-4);">Reference &amp; people to follow</h2>
+    <div class="table-scroll">
+      <table class="data">
+        <thead><tr><th>Site</th><th>What it's for</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">MDN Web Docs</a></td><td><b>The</b> reference. Every property, with syntax, examples and browser support. Bookmark it; use it daily.</td></tr>
+          <tr><td><a href="https://web.dev/learn/css">web.dev — Learn CSS</a></td><td>A free, modern, complete course from the Chrome team. The best structured second pass over this material.</td></tr>
+          <tr><td><a href="https://caniuse.com">Can I Use</a></td><td>Browser support for anything. Check before you ship a new feature.</td></tr>
+          <tr><td><a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">CSS-Tricks Flexbox guide</a> · <a href="https://css-tricks.com/snippets/css/complete-guide-grid/">Grid guide</a></td><td>The two cheat sheets everyone actually keeps open. Print them.</td></tr>
+          <tr><td><a href="https://moderncss.dev">Modern CSS Solutions</a></td><td>Stephanie Eckles rebuilding common components with today's CSS. Directly relevant to Module 3.</td></tr>
+          <tr><td><a href="https://www.joshwcomeau.com/css/">Josh Comeau</a></td><td>Deep, interactive explanations. His pieces on stacking contexts and centring are the clearest anywhere.</td></tr>
+          <tr><td><a href="https://ishadeed.com">Ahmad Shadeed</a></td><td>Visual debugging essays. <a href="https://defensivecss.dev">defensivecss.dev</a> is his collection of "what breaks and how to prevent it".</td></tr>
+          <tr><td><a href="https://www.youtube.com/@KevinPowell">Kevin Powell (YouTube)</a></td><td>The best free CSS teaching on video. If a concept in this course didn't land, he has a ten-minute video on it.</td></tr>
+          <tr><td><a href="https://www.smashingmagazine.com/category/css">Smashing Magazine</a></td><td>Long-form articles on where CSS is going.</td></tr>
+          <tr><td><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA">MDN ARIA</a> · <a href="https://www.w3.org/WAI/ARIA/apg/patterns/">ARIA Authoring Practices</a></td><td>How to build components that work for everyone. Read before you style a custom control.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- =============================================================== TOOLS -->
+  <section class="wrap section" id="tools">
+    <h2 style="font-size: var(--step-4);">Tools on your machine</h2>
+    <div class="grid" style="--min: 250px;">
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Browser DevTools</h3>
+        <p>Your most important tool by an enormous margin. Learn the <b>Styles</b> pane, the <b>flex/grid overlays</b>, the <b>Computed</b> tab, and device emulation. <code class="inline">F12</code> or <code class="inline">⌥⌘I</code>.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">VS Code + Live Server</h3>
+        <p>Auto-reload on save. Add <b>Prettier</b> for formatting and <b>Stylelint</b> for catching mistakes as you type.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Lighthouse &amp; axe</h3>
+        <p>Built into Chrome DevTools. Run <b>Lighthouse</b> for performance and <a href="https://www.deque.com/axe/devtools/">axe DevTools</a> or <a href="https://wave.webaim.org">WAVE</a> for accessibility. Both find real bugs in seconds.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Sandboxes</h3>
+        <p><a href="https://codepen.io">CodePen</a> for a quick experiment, <a href="https://stackblitz.com">StackBlitz</a> or <a href="https://codesandbox.io">CodeSandbox</a> for a whole project. Share a pen when you ask me a question.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Responsive testing</h3>
+        <p><a href="https://responsively.app">Responsively</a> and <a href="https://polypane.app">Polypane</a> show many viewports at once. Or just drag your window — do that constantly.</p>
+      </div>
+      <div class="card">
+        <h3 style="font-size: var(--step-1);">Build tools, later</h3>
+        <p><a href="https://lightningcss.dev">Lightning CSS</a> and <a href="https://postcss.org">PostCSS</a> transpile modern syntax for older browsers. You do not need them for this course — that is deliberate.</p>
+      </div>
+    </div>
+
+    <div class="note" style="margin-block-start: var(--space-l);">
+      <strong>Links rot.</strong> If one of these is dead, that is worth a pull
+      request — see <a href="README.md">the README</a> for how to contribute a
+      fix back to the class repo.
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><b>Resources.</b> External links are provided for study; every site
+      listed is independently operated and has its own terms and licences.
+      Check a font's licence before using it in work you ship.</p>
+  </div>
+</footer>
+
+</body>
+</html>

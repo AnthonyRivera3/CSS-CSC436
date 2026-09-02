@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 3 · Modern CSS — CSS Walk-Alongs</title>
+<meta name="description" content="Nesting, :has(), @layer, color-mix(), clamp(), transitions and keyframes, taught through a Baldur's-Gate-3-inspired parchment theme.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎲</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/theme-baldursgate.css">
+</head>
+<body class="page theme-bg3">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">CSS</span> Walk-Alongs</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span>Home</span></a>
+      <a href="lesson-1-persona.html"><span>1 · Foundations</span></a>
+      <a href="lesson-2-starwars.html"><span>2 · Layout</span></a>
+      <a href="lesson-3-baldursgate.html" aria-current="page"><span>3 · Modern</span></a>
+      <a href="code-review.html"><span>Code Review</span></a>
+      <a href="exercises.html"><span>Exercises</span></a>
+      <a href="resources.html"><span>Resources</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero">
+    <p class="eyebrow">Module 3 · Theme: “Faerûn”</p>
+    <h1>Modern CSS, or: <br>things you no longer need a build step for.</h1>
+    <p class="lede">
+      Nesting, a parent selector, real cascade layers, colour maths, fluid type.
+      Every feature in this module used to require Sass, a preprocessor, or a
+      JavaScript workaround. None of them do now.
+    </p>
+    <div class="cluster" style="margin-block-start: var(--space-m);">
+      <span class="tag">Advanced</span>
+      <span class="tag tag--2">≈ 2 sessions</span>
+      <span class="tag">Light theme</span>
+    </div>
+  </section>
+
+  <div class="wrap section lesson-layout">
+
+    <nav class="toc" aria-label="On this page">
+      <p class="eyebrow">Contents</p>
+      <ol>
+        <li><a href="#nesting">Nesting</a></li>
+        <li><a href="#has">The :has() selector</a></li>
+        <li><a href="#layers">Cascade layers</a></li>
+        <li><a href="#functions">Colour &amp; size functions</a></li>
+        <li><a href="#logical">Logical properties</a></li>
+        <li><a href="#motion">Transitions &amp; keyframes</a></li>
+        <li><a href="#next">What's next</a></li>
+        <li><a href="#build">What we build</a></li>
+      </ol>
+    </nav>
+
+    <div class="stack">
+
+      <section id="nesting" class="prose">
+        <h2 class="rule-ornate"><span>01 — Nesting</span></h2>
+        <p class="illuminated">
+          Native nesting landed in every browser, and it does what Sass nesting
+          did: keeps a component's rules together. The
+          <code class="inline">&amp;</code> stands for the parent selector.
+        </p>
+        <pre class="code">.tome {
+  padding: var(--space-l);
+  border: 2px solid var(--accent-2);
+
+  <b>& h3</b> { font-family: var(--font-display); }
+
+  <b>&:hover</b> { box-shadow: 0 0 0 3px var(--accent-2); }
+
+  <i>/* & is required when the nested selector starts with an element name */</i>
+  <b>& p</b> { color: var(--text-dim); }
+
+  <b>@media</b> (min-width: 40rem) { padding: var(--space-xl); }
+}</pre>
+        <div class="note note--warn">
+          <strong>Nest two levels, then stop.</strong> Deep nesting produces
+          long, high-specificity selectors that are miserable to override —
+          the exact problem cascade layers were invented to solve. If you are
+          four levels deep, the component wants splitting.
+        </div>
+      </section>
+
+      <section id="has" class="prose">
+        <h2 class="rule-ornate"><span>02 — <code>:has()</code>, the parent selector</span></h2>
+        <p>
+          For twenty years CSS could only look down the tree.
+          <code class="inline">:has()</code> lets a rule depend on what an
+          element <em>contains</em>, or on what follows it — which quietly
+          removes a whole category of JavaScript.
+        </p>
+        <pre class="code"><i>/* a card that contains an image gets a different layout */</i>
+.card<b>:has(img)</b> { grid-template-columns: 120px 1fr; }
+
+<i>/* style a form field's wrapper from the state of the input inside it */</i>
+.field<b>:has(input:invalid)</b> { border-color: var(--accent); }
+
+<i>/* "if any dialog is open, stop the page behind it scrolling" */</i>
+body<b>:has(dialog[open])</b> { overflow: hidden; }
+
+<i>/* dim every sibling except the hovered one */</i>
+.party<b>:has(.member:hover)</b> .member:not(:hover) { opacity: .55; }</pre>
+        <div class="demo">
+          <span class="demo__label">Hover a party member — no JavaScript</span>
+          <div class="party grid" style="--min: 130px;">
+            <div class="member card"><h3 style="font-size:var(--step-0);">Cleric</h3><p>Heals.</p></div>
+            <div class="member card"><h3 style="font-size:var(--step-0);">Rogue</h3><p>Steals.</p></div>
+            <div class="member card"><h3 style="font-size:var(--step-0);">Wizard</h3><p>Explodes.</p></div>
+          </div>
+        </div>
+        <style>
+          .party .member { transition: opacity var(--dur) var(--ease); }
+          .party:has(.member:hover) .member:not(:hover) { opacity: .45; }
+        </style>
+        <div class="note">
+          <strong>Specificity note:</strong> <code class="inline">:has()</code>
+          takes the specificity of its most specific argument, exactly like
+          <code class="inline">:is()</code>. Wrap the argument in
+          <code class="inline">:where()</code> if you want it to score zero.
+        </div>
+      </section>
+
+      <section id="layers" class="prose">
+        <h2 class="rule-ornate"><span>03 — Cascade layers</span></h2>
+        <p>
+          <code class="inline">@layer</code> lets you declare the priority order
+          of whole groups of CSS <em>up front</em>. A rule in a later layer
+          beats a rule in an earlier one <b>no matter how specific</b> the
+          earlier one is. This is the real cure for
+          <code class="inline">!important</code> wars.
+        </p>
+        <pre class="code"><i>/* Declare the order once, at the top of your stylesheet. */</i>
+<b>@layer</b> <u>reset, framework, components, theme, utilities</u>;
+
+<b>@layer</b> framework {
+  #sidebar .nav a { color: blue; }   <i>/* specificity 1,2,1 — and it still loses */</i>
+}
+
+<b>@layer</b> theme {
+  a { color: crimson; }              <i>/* specificity 0,0,1 — and it wins */</i>
+}</pre>
+        <div class="note note--tip">
+          <strong>Where this earns its keep:</strong> importing a third-party
+          stylesheet into a low layer —
+          <code class="inline">@import url(bootstrap.css) layer(framework);</code>
+          — so your own single-class rules can override the library without a
+          single <code class="inline">!important</code>.
+        </div>
+      </section>
+
+      <section id="functions" class="prose">
+        <h2 class="rule-ornate"><span>04 — Colour &amp; size functions</span></h2>
+        <pre class="code"><i>/* clamp(MIN, PREFERRED, MAX) — fluid sizing with no breakpoints */</i>
+h1    { font-size: <b>clamp</b>(<u>2rem</u>, <u>1.5rem + 2.5vw</u>, <u>3.8rem</u>); }
+.wrap { inline-size: <b>min</b>(<u>100% - 2rem</u>, <u>1180px</u>); }
+.side { inline-size: <b>max</b>(<u>240px</u>, <u>20%</u>); }
+
+<i>/* colour maths, in the browser, at runtime */</i>
+.btn:hover  { background: <b>color-mix</b>(<u>in oklch, var(--accent) 85%, white</u>); }
+.tag        { background: <b>color-mix</b>(<u>in srgb, var(--accent) 18%, transparent</u>); }
+
+<i>/* relative colours: derive from an existing one */</i>
+.muted      { color: <b>rgb</b>(<u>from var(--accent) r g b / 40%</u>); }</pre>
+        <div class="demo">
+          <span class="demo__label">One accent, five tints, all computed by CSS</span>
+          <div class="cluster">
+            <span class="tag">18%</span>
+            <span class="tag tag--2">gold</span>
+            <span class="roll">18</span>
+            <span class="roll roll--nat20">20</span>
+            <span class="roll roll--nat1">1</span>
+          </div>
+        </div>
+        <p style="margin-block-start: var(--space-m);">
+          Those dice are one element each: a
+          <code class="inline">conic-gradient</code> background and a
+          <code class="inline">clip-path</code> polygon. No SVG, no images.
+        </p>
+      </section>
+
+      <section id="logical" class="prose">
+        <h2 class="rule-ornate"><span>05 — Logical properties</span></h2>
+        <p>
+          <code class="inline">margin-left</code> is a physical direction.
+          <code class="inline">margin-inline-start</code> is "the side the text
+          starts on" — which flips automatically in Arabic or Hebrew. Same code,
+          working layout, in any writing mode.
+        </p>
+        <div class="table-scroll">
+          <table class="data">
+            <thead><tr><th>Physical</th><th>Logical</th></tr></thead>
+            <tbody>
+              <tr><td><code>width</code> / <code>height</code></td><td><code>inline-size</code> / <code>block-size</code></td></tr>
+              <tr><td><code>margin-left</code></td><td><code>margin-inline-start</code></td></tr>
+              <tr><td><code>padding-top</code> / <code>-bottom</code></td><td><code>padding-block</code></td></tr>
+              <tr><td><code>border-right</code></td><td><code>border-inline-end</code></td></tr>
+              <tr><td><code>top: 0; left: 0</code></td><td><code>inset-block-start: 0; inset-inline-start: 0</code></td></tr>
+              <tr><td><code>text-align: left</code></td><td><code>text-align: start</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="motion" class="prose">
+        <h2 class="rule-ornate"><span>06 — Transitions &amp; keyframes</span></h2>
+        <p>
+          A <b>transition</b> animates between two states you already have. A
+          <b>keyframe animation</b> runs on its own schedule.
+        </p>
+        <pre class="code"><i>/* Transition: name the properties. Never write `transition: all`. */</i>
+.btn {
+  <b>transition</b>: <u>transform 180ms cubic-bezier(.2,.8,.2,1),
+              background-color 180ms ease</u>;
+}
+.btn:hover { transform: translateY(-2px); }
+
+<i>/* Keyframes */</i>
+<b>@keyframes</b> <u>pulse</u> {
+  from { opacity: 1; }
+  to   { opacity: .4; }
+}
+.loading { <b>animation</b>: <u>pulse 1.2s ease-in-out infinite alternate</u>; }</pre>
+        <div class="note note--tip">
+          <strong>Only two properties are cheap to animate:</strong>
+          <code class="inline">transform</code> and
+          <code class="inline">opacity</code>. They run on the compositor.
+          Animating <code class="inline">width</code>,
+          <code class="inline">top</code>, or
+          <code class="inline">margin</code> forces the browser to re-lay-out
+          every frame — that is what a janky animation is.
+        </div>
+        <div class="note note--warn" style="margin-block-start: var(--space-s);">
+          <strong>Motion is an accessibility setting.</strong> Wrap decorative
+          motion in
+          <code class="inline">@media (prefers-reduced-motion: no-preference)</code>,
+          or kill it globally the way <code class="inline">base.css</code> does.
+          Vestibular disorders are real and common.
+        </div>
+        <div class="demo">
+          <span class="demo__label">Ability check — the bar transitions its own width</span>
+          <div style="display:grid; gap:.6rem; max-inline-size: 30rem;">
+            <p class="mono" style="font-size:.75rem;">PERSUASION</p>
+            <div class="check-bar"><span style="--value: 78%;"></span></div>
+            <p class="mono" style="font-size:.75rem;">STEALTH</p>
+            <div class="check-bar"><span style="--value: 34%;"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="next" class="prose">
+        <h2 class="rule-ornate"><span>07 — On the horizon</span></h2>
+        <ul>
+          <li><b><code class="inline">@scope</code></b> — limit rules to a subtree without BEM-style naming gymnastics.</li>
+          <li><b><code class="inline">@starting-style</code></b> — animate an element <em>in</em>, including elements entering from <code class="inline">display: none</code>.</li>
+          <li><b>View Transitions</b> — cross-fade or morph between two states, and between two pages, with <code class="inline">view-transition-name</code>.</li>
+          <li><b>Scroll-driven animations</b> — <code class="inline">animation-timeline: scroll()</code> ties a keyframe animation to scroll position, with no scroll listener.</li>
+          <li><b>Anchor positioning</b> — tether a tooltip or popover to an element without measuring anything in JavaScript.</li>
+        </ul>
+        <p>
+          Check <a href="resources.html#reference">caniuse</a> before you ship
+          any of them, and treat them as enhancements: the page must still work
+          when they are ignored.
+        </p>
+      </section>
+
+      <section id="build" class="prose">
+        <h2 class="rule-ornate"><span>08 — What we build together</span></h2>
+      </section>
+
+      <div class="tome">
+        <p class="eyebrow">Character Sheet</p>
+        <h3 style="font-size: var(--step-3);">Astarion, Rogue 4</h3>
+        <p class="illuminated" style="margin-block-start: var(--space-s);">
+          Sample body copy set in a serif face, opened with an illuminated drop
+          cap built from <code class="inline">::first-letter</code>. The frame
+          around this panel is one element with an inset
+          <code class="inline">::before</code> — the double rule of an old book
+          page, and not a single image request.
+        </p>
+        <div class="grid" style="--min: 150px; margin-block-start: var(--space-m);">
+          <div>
+            <p class="mono" style="font-size:.72rem;">DEXTERITY</p>
+            <div class="check-bar"><span style="--value: 92%;"></span></div>
+          </div>
+          <div>
+            <p class="mono" style="font-size:.72rem;">CHARISMA</p>
+            <div class="check-bar"><span style="--value: 71%;"></span></div>
+          </div>
+          <div>
+            <p class="mono" style="font-size:.72rem;">WISDOM</p>
+            <div class="check-bar"><span style="--value: 40%;"></span></div>
+          </div>
+        </div>
+        <p class="rule-ornate" style="margin-block-start: var(--space-l);"><span class="mono" style="font-size:.72rem;">END OF ENTRY</span></p>
+      </div>
+
+      <div class="note note--tip" style="margin-block-start: var(--space-xl);">
+        <strong>Your turn:</strong> labs <b>09</b> and <b>10</b> on the
+        <a href="exercises.html">Exercises page</a> cover
+        <code class="inline">:has()</code> and motion. Case study <b>5</b> on
+        the <a href="code-review.html">Code Review page</a> refactors a
+        <code class="inline">!important</code> war using cascade layers.
+      </div>
+
+      <nav class="cluster" style="margin-block-start: var(--space-xl);">
+        <a class="btn btn--ghost" href="lesson-2-starwars.html">← Module 2</a>
+        <a class="btn" href="code-review.html">Code Review →</a>
+      </nav>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><b>Module 3 · Modern CSS.</b> Theme “Faerûn” is an original CSS homage —
+      parchment, filigree and dice are drawn with gradients and
+      <code class="inline">clip-path</code>. No game assets are used.</p>
+  </div>
+</footer>
+
+</body>
+</html>

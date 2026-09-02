@@ -1,0 +1,137 @@
+/* ==========================================================================
+   theme-baldursgate.css — Module 3 skin: "Faerûn" (Baldur's Gate 3 inspired)
+   --------------------------------------------------------------------------
+   Homage built entirely from CSS: no logos or game assets.
+
+   Design language:
+     - Aged parchment and ink, lit by gold
+     - High-contrast serif display type with real letterspacing
+     - Ornate rules and corner filigree drawn with gradients + ::before/::after
+     - A LIGHT theme, to prove the same components survive an inverted palette
+   ========================================================================== */
+
+:root {
+  --bg:        #efe4cd;   /* parchment */
+  --bg-2:      #e6d8ba;
+  --surface:   #f7efdd;
+  --surface-2: #eadfc4;
+  --border:    #c4ae83;
+  --text:      #2a2018;   /* iron-gall ink */
+  --text-dim:  #6b5b45;
+  --accent:    #8a1c1c;   /* wax-seal crimson */
+  --accent-2:  #a67c22;   /* gold leaf */
+
+  --font-display: "Cinzel", "Trajan Pro", Georgia, serif;
+  --font-body:    "EB Garamond", Georgia, "Times New Roman", serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --display-weight: 700;
+  --display-transform: none;
+  --display-spacing: 0.04em;
+
+  --radius:    4px;
+  --radius-lg: 6px;
+  --shadow:    0 1px 0 rgb(255 255 255 / 0.6) inset, 0 6px 18px rgb(74 55 30 / 0.18);
+  --measure:   66ch;
+
+  /* Parchment grain: two low-opacity gradient layers at odd angles read as
+     fibre. Cheap, tileable, and no image request. */
+  --page-texture:
+    repeating-linear-gradient(38deg,  rgb(120 90 40 / 0.035) 0 2px, transparent 2px 5px),
+    repeating-linear-gradient(-52deg, rgb(120 90 40 / 0.030) 0 3px, transparent 3px 7px),
+    radial-gradient(ellipse 120% 80% at 50% 0%, rgb(166 124 34 / 0.16), transparent 60%);
+  --page-texture-size: auto, auto, cover;
+
+  color-scheme: light;
+}
+
+/* Code blocks need to stay dark for contrast even on a light page. */
+.theme-bg3 pre.code { background-color: #211a12; border-color: #4a3b26; color: #ecdfc6; }
+.theme-bg3 pre.code i { color: #9c8a6b; }
+
+/* -- Signature: illuminated drop cap -------------------------------------- */
+/* ::first-letter is a pseudo-element that only accepts a limited set of
+   properties — font, color, box model, float. That is enough for this. */
+.illuminated::first-letter {
+  float: inline-start;
+  margin-inline-end: 0.08em;
+  padding-inline-end: 0.05em;
+  font-family: var(--font-display);
+  font-size: 3.6em;
+  line-height: 0.82;
+  color: var(--accent);
+  text-shadow: 1px 1px 0 var(--accent-2);
+}
+
+/* -- Signature: the gilded rule ------------------------------------------- */
+.rule-ornate {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  color: var(--accent-2);
+}
+.rule-ornate::before,
+.rule-ornate::after {
+  content: "";
+  flex: 1;
+  block-size: 2px;
+  background: linear-gradient(to right, transparent, var(--accent-2), transparent);
+}
+
+/* -- Signature: the framed tome panel ------------------------------------- */
+.tome {
+  position: relative;
+  padding: var(--space-l);
+  background-color: var(--surface);
+  border: 2px solid var(--accent-2);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+/* An inset second frame — the classic "double rule" of an old book page. */
+.tome::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid color-mix(in srgb, var(--accent-2) 55%, transparent);
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* -- Signature: the dice-roll result -------------------------------------- */
+.roll {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 3.2em;
+  block-size: 3.2em;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--surface);
+  background: conic-gradient(from 30deg, var(--accent-2), #d8b256, var(--accent-2));
+  /* A d20 silhouette: a regular hexagon is close enough at small sizes. */
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  text-shadow: 0 1px 1px rgb(0 0 0 / 0.35);
+}
+.roll--nat20 { background: conic-gradient(from 30deg, #2f7d4f, #62c98a, #2f7d4f); }
+.roll--nat1  { background: conic-gradient(from 30deg, #6d1616, #b33a3a, #6d1616); }
+
+/* -- Signature: the ability-check bar ------------------------------------- */
+.check-bar {
+  block-size: 10px;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--text) 12%, transparent);
+  overflow: hidden;
+}
+.check-bar > span {
+  display: block;
+  block-size: 100%;
+  inline-size: var(--value, 50%);
+  border-radius: inherit;
+  background: linear-gradient(to right, var(--accent), var(--accent-2));
+  transition: inline-size 600ms var(--ease);
+}
+
+.theme-bg3 .hero h1 { color: var(--accent); }
+.theme-bg3 .btn { color: #fff8e8; }
+.theme-bg3 .site-header {
+  background-color: color-mix(in srgb, var(--bg) 88%, transparent);
+}

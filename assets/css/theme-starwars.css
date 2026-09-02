@@ -1,0 +1,137 @@
+/* ==========================================================================
+   theme-starwars.css — Module 2 skin: "Outer Rim" (Star Wars inspired)
+   --------------------------------------------------------------------------
+   Homage built entirely from CSS: no logos, no game or film assets.
+
+   Design language:
+     - Void-black background, holographic cyan, warning amber
+     - Wide-tracked uppercase technical type (the "cockpit readout" look)
+     - Faint CRT scanlines and a starfield made of radial gradients
+     - Thin glowing hairlines instead of heavy borders
+   ========================================================================== */
+
+:root {
+  --bg:        #05070d;
+  --bg-2:      #080b14;
+  --surface:   #0b1020;
+  --surface-2: #111a2e;
+  --border:    #1d2b44;
+  --text:      #dbe7f5;
+  --text-dim:  #7d90ab;
+  --accent:    #4cc9f0;   /* hologram cyan */
+  --accent-2:  #ffb703;   /* console amber */
+
+  --font-display: "Orbitron", "Eurostile", "Trebuchet MS", sans-serif;
+  --font-body:    "Titillium Web", system-ui, sans-serif;
+  --font-mono:    "Share Tech Mono", ui-monospace, Menlo, monospace;
+  --display-weight: 700;
+  --display-transform: uppercase;
+  --display-spacing: 0.08em;
+
+  --radius:    4px;
+  --radius-lg: 6px;
+  --shadow:    0 0 0 1px rgb(76 201 240 / 0.10), 0 10px 40px rgb(0 0 0 / 0.6);
+
+  /* Starfield: three radial-gradient layers at different sizes, plus a
+     nebula wash. `background-size` on each layer sets the star density. */
+  --page-texture:
+    radial-gradient(1px 1px at 20% 30%, rgb(255 255 255 / 0.55), transparent 0),
+    radial-gradient(1px 1px at 70% 65%, rgb(255 255 255 / 0.40), transparent 0),
+    radial-gradient(2px 2px at 45% 85%, rgb(255 255 255 / 0.25), transparent 0),
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgb(76 201 240 / 0.10), transparent 70%);
+  --page-texture-size: 220px 220px, 340px 340px, 480px 480px, cover;
+}
+
+/* -- Signature: CRT scanlines over the whole page ------------------------- */
+/* A fixed, non-interactive overlay. pointer-events:none is what keeps it from
+   eating every click on the page — the classic beginner trap. */
+.theme-starwars .page::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgb(0 0 0 / 0.22) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* -- Signature: the glowing hologram panel -------------------------------- */
+.holo {
+  position: relative;
+  padding: var(--space-m);
+  background: linear-gradient(160deg,
+    rgb(76 201 240 / 0.10),
+    rgb(76 201 240 / 0.02) 40%,
+    transparent);
+  border: 1px solid rgb(76 201 240 / 0.35);
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 30px rgb(76 201 240 / 0.10);
+}
+/* Corner brackets — four gradients, zero extra elements. */
+.holo::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 14px 1px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 1px 14px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 100% / 14px 1px no-repeat,
+    linear-gradient(var(--accent), var(--accent)) 100% 100% / 1px 14px no-repeat;
+  opacity: 0.8;
+}
+
+/* -- Signature: the opening crawl ----------------------------------------- */
+/* perspective on the parent + rotateX on the child = real 3D recession. */
+.crawl-stage {
+  perspective: 340px;
+  overflow: hidden;
+  block-size: 340px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 28%, #000 72%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 28%, #000 72%, transparent);
+}
+.crawl {
+  transform: rotateX(52deg);
+  transform-origin: 50% 100%;
+  color: var(--accent-2);
+  font-family: var(--font-display);
+  text-align: center;
+  animation: crawl 42s linear infinite;
+}
+.crawl h3 { font-size: var(--step-3); margin-block-end: var(--space-s); }
+.crawl p  { font-size: var(--step-1); margin-block-end: var(--space-s); }
+
+@keyframes crawl {
+  from { transform: rotateX(52deg) translateY(100%); }
+  to   { transform: rotateX(52deg) translateY(-180%); }
+}
+
+/* -- Signature: amber terminal readout ------------------------------------ */
+.readout {
+  font-family: var(--font-mono);
+  color: var(--accent-2);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgb(255 183 3 / 0.55);
+}
+
+/* A blinking cursor built from an animation on ::after. */
+.readout::after {
+  content: "_";
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* Headings glow. text-shadow layered 2-3 deep reads as light, not blur. */
+.theme-starwars .hero h1 {
+  color: #fff;
+  text-shadow: 0 0 12px rgb(76 201 240 / 0.65), 0 0 40px rgb(76 201 240 / 0.35);
+}
+
+.theme-starwars .card { border-color: rgb(76 201 240 / 0.22); }
+.theme-starwars .card:hover { box-shadow: 0 0 24px rgb(76 201 240 / 0.20); }
+.theme-starwars .btn { color: #04121a; letter-spacing: 0.1em; text-transform: uppercase; }

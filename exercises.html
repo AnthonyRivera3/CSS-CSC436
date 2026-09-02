@@ -1,0 +1,907 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exercises — CSS Walk-Alongs</title>
+<meta name="description" content="Ten fill-in-the-blank CSS labs with a live preview and automatic checking of your computed styles.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧪</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/lab.css">
+</head>
+<body class="page">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">CSS</span> Walk-Alongs</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span>Home</span></a>
+      <a href="lesson-1-persona.html"><span>1 · Foundations</span></a>
+      <a href="lesson-2-starwars.html"><span>2 · Layout</span></a>
+      <a href="lesson-3-baldursgate.html"><span>3 · Modern</span></a>
+      <a href="code-review.html"><span>Code Review</span></a>
+      <a href="exercises.html" aria-current="page"><span>Exercises</span></a>
+      <a href="resources.html"><span>Resources</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero">
+    <p class="eyebrow">Practice</p>
+    <h1>Ten labs. Write the CSS, prove it works.</h1>
+    <p class="lede">
+      Each lab gives you fixed HTML and a stylesheet with the interesting parts
+      missing. The preview updates as you type. When you think you have it, hit
+      <b>Check my work</b> — the page reads the <em>computed styles</em> of the
+      result and tells you which requirements you met.
+    </p>
+  </section>
+
+  <section class="wrap section">
+    <div class="prose">
+      <h2 class="mt-0">Before you start</h2>
+      <ul>
+        <li><b>Your work is saved in this browser</b> as you type, per lab. Closing the tab is safe; <b>Reset</b> is not — it wipes that lab back to the starter.</li>
+        <li><b>Tab indents</b> inside the editor. Press <kbd>Escape</kbd> then <kbd>Tab</kbd> to move to the next control instead.</li>
+        <li>The checks grade the <b>result</b>, not the technique. A lab can pass with a clumsy solution — the brief tells you which approach we are practising, and that is the one to use.</li>
+        <li>Stuck for more than ten minutes? Open <b>Reveal one working answer</b>. Read it, close it, then write it yourself from memory.</li>
+      </ul>
+      <noscript>
+        <p class="js-required"><strong>JavaScript is disabled.</strong> These
+        labs need it to render the preview and run the checks. The lesson pages
+        and the resources page work fine without it.</p>
+      </noscript>
+    </div>
+  </section>
+
+  <!-- =============================================================== 01 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="01-box-model">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 01</span><span class="tag tag--2">Module 1 · Box model</span></div>
+        <h3 style="margin-block-start:.4rem;">Build the calling card</h3>
+        <p class="lab__brief">
+          Make <code class="inline">.card</code> exactly <b>260px</b> wide
+          including its border, with <b>24px</b> of padding, a <b>2px solid
+          #e60012</b> border, and <b>12px</b> rounded corners. The width must
+          include the padding and border — that means setting
+          <code class="inline">box-sizing</code>.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <div class="card">
+          <h2>Calling Card</h2>
+          <p>We know how distorted your desires have become.</p>
+        </div>
+      </template>
+
+      <template data-lab-start>
+        .card {
+          background: #151515;
+          color: #f5f5f5;
+          /* TODO: box-sizing so width includes padding + border */
+          /* TODO: width */
+          /* TODO: padding */
+          /* TODO: border */
+          /* TODO: border-radius */
+        }
+        .card h2 { margin: 0 0 8px; font-size: 1.25rem; }
+        .card p  { margin: 0; color: #9a9a9a; }
+      </template>
+
+      <template data-lab-solution>
+        .card {
+          background: #151515;
+          color: #f5f5f5;
+          box-sizing: border-box;
+          width: 260px;
+          padding: 24px;
+          border: 2px solid #e60012;
+          border-radius: 12px;
+        }
+        .card h2 { margin: 0 0 8px; font-size: 1.25rem; }
+        .card p  { margin: 0; color: #9a9a9a; }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "box-sizing is border-box",        "selector": ".card", "prop": "box-sizing",       "equals": "border-box" },
+        { "label": "The card is 260px wide",          "selector": ".card", "prop": "width",            "equals": "260px" },
+        { "label": "24px of padding on every side",   "selector": ".card", "prop": "padding-top",      "equals": "24px" },
+        { "label": "…including the left side",        "selector": ".card", "prop": "padding-left",     "equals": "24px" },
+        { "label": "A 2px border",                    "selector": ".card", "prop": "border-top-width", "equals": "2px" },
+        { "label": "…in #e60012",                     "selector": ".card", "prop": "border-top-color", "equals": "#e60012" },
+        { "label": "12px rounded corners",            "selector": ".card", "prop": "border-top-left-radius", "equals": "12px" }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 02 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="02-selectors">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 02</span><span class="tag tag--2">Module 1 · Selectors</span></div>
+        <h3 style="margin-block-start:.4rem;">Highlight the current page</h3>
+        <p class="lab__brief">
+          Every link in <code class="inline">.nav</code> should be
+          <b>#8a8f98</b>. The link for the current page should be
+          <b>#e60012</b> and <b>bold</b> — and you must target it with the
+          <b><code class="inline">[aria-current="page"]</code> attribute
+          selector</b> that is already in the HTML. No new classes, and no
+          <code class="inline">!important</code>.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <nav class="nav">
+          <a href="#">Home</a>
+          <a href="#" aria-current="page">Modules</a>
+          <a href="#">Resources</a>
+        </nav>
+      </template>
+
+      <template data-lab-start>
+        .nav {
+          display: flex;
+          gap: 14px;
+        }
+        .nav a {
+          text-decoration: none;
+          /* TODO: the default link colour */
+        }
+        /* TODO: a rule for the current page's link */
+      </template>
+
+      <template data-lab-solution>
+        .nav {
+          display: flex;
+          gap: 14px;
+        }
+        .nav a {
+          text-decoration: none;
+          color: #8a8f98;
+        }
+        .nav a[aria-current="page"] {
+          color: #e60012;
+          font-weight: 700;
+        }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "Ordinary links are #8a8f98", "selector": ".nav a:not([aria-current])", "prop": "color",       "equals": "#8a8f98" },
+        { "label": "The current link is #e60012", "selector": ".nav a[aria-current='page']", "prop": "color",     "equals": "#e60012" },
+        { "label": "The current link is bold",    "selector": ".nav a[aria-current='page']", "prop": "font-weight", "equals": "700" }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 03 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="03-custom-properties">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 03</span><span class="tag tag--2">Module 1 · Tokens</span></div>
+        <h3 style="margin-block-start:.4rem;">One token, two variants</h3>
+        <p class="lab__brief">
+          Declare <code class="inline">--chip-bg: #e60012</code> on
+          <code class="inline">:root</code>. Use it with
+          <code class="inline">var()</code> for the chip background — do not
+          write the hex code inside <code class="inline">.chip</code>. Then
+          make <code class="inline">.chip--gold</code> gold
+          (<b>#a67c22</b>) by <b>re-declaring the token on that class</b>, not
+          by setting <code class="inline">background-color</code> again.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <span class="chip">Phantom</span>
+          <span class="chip">Thief</span>
+          <span class="chip chip--gold">Legendary</span>
+        </div>
+      </template>
+
+      <template data-lab-start>
+        :root {
+          /* TODO: declare --chip-bg */
+        }
+        .chip {
+          padding: 6px 14px;
+          border-radius: 999px;
+          color: #fff;
+          font-size: 14px;
+          /* TODO: background-color, using var() */
+        }
+        .chip--gold {
+          /* TODO: re-declare the token here */
+        }
+      </template>
+
+      <template data-lab-solution>
+        :root {
+          --chip-bg: #e60012;
+        }
+        .chip {
+          padding: 6px 14px;
+          border-radius: 999px;
+          color: #fff;
+          font-size: 14px;
+          background-color: var(--chip-bg);
+        }
+        .chip--gold {
+          --chip-bg: #a67c22;
+        }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "--chip-bg is declared on :root", "selector": ":root",       "prop": "--chip-bg",        "contains": "#e60012" },
+        { "label": "Chips use it as their background", "selector": ".chip",     "prop": "background-color", "equals": "#e60012" },
+        { "label": "The gold variant re-declares the token", "selector": ".chip--gold", "prop": "--chip-bg", "contains": "#a67c22" },
+        { "label": "…so its background is gold",     "selector": ".chip--gold", "prop": "background-color", "equals": "#a67c22" }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 04 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="04-typography">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 04</span><span class="tag tag--2">Module 1 · Typography</span></div>
+        <h3 style="margin-block-start:.4rem;">Fluid heading, readable paragraph</h3>
+        <p class="lab__brief">
+          Size the <code class="inline">h1</code> with
+          <code class="inline">clamp(2.5rem, 1.5rem + 3vw, 3.5rem)</code>, set it
+          <b>uppercase</b> with <code class="inline">text-wrap: balance</code>.
+          Give the paragraph a reading measure of
+          <code class="inline">60ch</code> and a
+          <code class="inline">line-height</code> of <code class="inline">1.6</code>.
+          Drag the divider between the two panes to see the heading resize.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <h1>Steal the treasure of a corrupt heart</h1>
+        <p>Line length and line height decide whether a paragraph is comfortable to read. Somewhere around sixty characters per line is the sweet spot for most Latin text, and roughly 1.5 to 1.7 line height for body copy.</p>
+      </template>
+
+      <template data-lab-start>
+        h1 {
+          margin: 0 0 12px;
+          line-height: 1.05;
+          /* TODO: fluid font-size with clamp() */
+          /* TODO: uppercase */
+          /* TODO: text-wrap */
+        }
+        p {
+          color: #444;
+          /* TODO: reading measure */
+          /* TODO: line-height */
+        }
+      </template>
+
+      <template data-lab-solution>
+        h1 {
+          margin: 0 0 12px;
+          line-height: 1.05;
+          font-size: clamp(2.5rem, 1.5rem + 3vw, 3.5rem);
+          text-transform: uppercase;
+          text-wrap: balance;
+        }
+        p {
+          color: #444;
+          max-width: 60ch;
+          line-height: 1.6;
+        }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "The heading is uppercase",              "selector": "h1", "prop": "text-transform", "equals": "uppercase" },
+        { "label": "The heading font-size lands in the clamp range", "selector": "h1", "prop": "font-size", "min": 40, "max": 58 },
+        { "label": "The heading balances its line breaks",  "selector": "h1", "prop": "text-wrap",      "contains": "balance" },
+        { "label": "The paragraph has a reading measure",   "selector": "p",  "prop": "max-width",      "min": 300, "max": 800 },
+        { "label": "Body line-height is around 1.6",        "selector": "p",  "prop": "line-height",    "min": 25, "max": 27 }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 05 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="05-flexbox">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 05</span><span class="tag tag--2">Module 2 · Flexbox</span></div>
+        <h3 style="margin-block-start:.4rem;">The bridge toolbar</h3>
+        <p class="lab__brief">
+          Lay <code class="inline">.bar</code> out as a <b>flex row</b>,
+          vertically <b>centred</b>, with a <b>12px gap</b>, allowed to
+          <b>wrap</b>. Then push <code class="inline">.cta</code> — and only it
+          — to the far end using an <b>auto margin</b>, not
+          <code class="inline">justify-content</code>.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <div class="bar">
+          <strong class="logo">MILLENNIUM</strong>
+          <a href="#">Systems</a>
+          <a href="#">Cargo</a>
+          <button class="cta">Jump</button>
+        </div>
+      </template>
+
+      <template data-lab-start>
+        .bar {
+          padding: 10px 14px;
+          background: #0b1020;
+          border-radius: 6px;
+          /* TODO: make it a flex row */
+          /* TODO: align items on the cross axis */
+          /* TODO: gap */
+          /* TODO: allow wrapping */
+        }
+        .logo { color: #4cc9f0; letter-spacing: .12em; font-size: 13px; }
+        .bar a { color: #7d90ab; text-decoration: none; font-size: 14px; }
+        .cta {
+          font: inherit;
+          padding: 6px 14px;
+          border: 0;
+          border-radius: 4px;
+          background: #4cc9f0;
+          cursor: pointer;
+          /* TODO: push me to the end */
+        }
+      </template>
+
+      <template data-lab-solution>
+        .bar {
+          padding: 10px 14px;
+          background: #0b1020;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+        .logo { color: #4cc9f0; letter-spacing: .12em; font-size: 13px; }
+        .bar a { color: #7d90ab; text-decoration: none; font-size: 14px; }
+        .cta {
+          font: inherit;
+          padding: 6px 14px;
+          border: 0;
+          border-radius: 4px;
+          background: #4cc9f0;
+          cursor: pointer;
+          margin-inline-start: auto;
+        }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "The bar is a flex container", "selector": ".bar", "prop": "display",     "equals": "flex" },
+        { "label": "Items are centred on the cross axis", "selector": ".bar", "prop": "align-items", "equals": "center" },
+        { "label": "12px gap between items",     "selector": ".bar", "prop": "column-gap",  "equals": "12px" },
+        { "label": "Items are allowed to wrap",  "selector": ".bar", "prop": "flex-wrap",   "equals": "wrap" },
+        { "label": "An auto margin pushes the button to the end", "selector": ".cta", "prop": "margin-left", "min": 1 }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 06 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="06-grid-autofit">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 06</span><span class="tag tag--2">Module 2 · Grid</span></div>
+        <h3 style="margin-block-start:.4rem;">A gallery with no media queries</h3>
+        <p class="lab__brief">
+          Turn <code class="inline">.gallery</code> into a grid with a
+          <b>16px gap</b> whose columns are
+          <code class="inline">repeat(auto-fit, minmax(min(140px, 100%), 1fr))</code>.
+          You should end up with several columns, and no horizontal scrollbar
+          at any width.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <div style="max-width:460px;">
+          <div class="gallery">
+            <div class="tile">01</div><div class="tile">02</div><div class="tile">03</div>
+            <div class="tile">04</div><div class="tile">05</div><div class="tile">06</div>
+          </div>
+        </div>
+      </template>
+
+      <template data-lab-start>
+        .gallery {
+          /* TODO: display */
+          /* TODO: gap */
+          /* TODO: grid-template-columns with auto-fit + minmax + min */
+        }
+        .tile {
+          display: grid;
+          place-items: center;
+          min-height: 70px;
+          background: #111a2e;
+          color: #4cc9f0;
+          border: 1px solid #1d2b44;
+          border-radius: 6px;
+          font-family: monospace;
+        }
+      </template>
+
+      <template data-lab-solution>
+        .gallery {
+          display: grid;
+          gap: 16px;
+          grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
+        }
+        .tile {
+          display: grid;
+          place-items: center;
+          min-height: 70px;
+          background: #111a2e;
+          color: #4cc9f0;
+          border: 1px solid #1d2b44;
+          border-radius: 6px;
+          font-family: monospace;
+        }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "The gallery is a grid",   "selector": ".gallery", "prop": "display",    "equals": "grid" },
+        { "label": "16px gap between tiles",  "selector": ".gallery", "prop": "column-gap", "equals": "16px" },
+        { "label": "…in both directions",     "selector": ".gallery", "prop": "row-gap",    "equals": "16px" },
+        { "label": "Tiles share the row instead of stacking one per line", "selector": ".tile", "prop": "width", "min": 90, "max": 230 }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 07 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="07-grid-areas">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 07</span><span class="tag tag--2">Module 2 · Grid areas</span></div>
+        <h3 style="margin-block-start:.4rem;">The console shell</h3>
+        <p class="lab__brief">
+          Build the app shell with <b>named grid areas</b>. Columns:
+          <code class="inline">120px 1fr</code>. The sidebar spans all three
+          rows on the left; header, main and footer stack on the right. Assign
+          each child with <code class="inline">grid-area</code>.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <div class="shell">
+          <aside class="sidebar">nav</aside>
+          <header class="head">header</header>
+          <main class="main">main</main>
+          <footer class="foot">footer</footer>
+        </div>
+      </template>
+
+      <template data-lab-start>
+        .shell {
+          /* TODO: display */
+          /* TODO: grid-template-columns */
+          /* TODO: grid-template-areas — three rows */
+          gap: 8px;
+        }
+        /* TODO: assign each child to its area */
+
+        .shell > * {
+          display: grid;
+          place-items: center;
+          padding: 12px;
+          background: #111a2e;
+          color: #4cc9f0;
+          border: 1px solid #1d2b44;
+          border-radius: 6px;
+          font-family: monospace;
+          font-size: 13px;
+        }
+        .main { min-height: 90px; }
+      </template>
+
+      <template data-lab-solution>
+        .shell {
+          display: grid;
+          grid-template-columns: 120px 1fr;
+          grid-template-areas:
+            "nav header"
+            "nav main"
+            "nav footer";
+          gap: 8px;
+        }
+        .sidebar { grid-area: nav; }
+        .head    { grid-area: header; }
+        .main    { grid-area: main; }
+        .foot    { grid-area: footer; }
+
+        .shell > * {
+          display: grid;
+          place-items: center;
+          padding: 12px;
+          background: #111a2e;
+          color: #4cc9f0;
+          border: 1px solid #1d2b44;
+          border-radius: 6px;
+          font-family: monospace;
+          font-size: 13px;
+        }
+        .main { min-height: 90px; }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "The shell is a grid",              "selector": ".shell",  "prop": "display",              "equals": "grid" },
+        { "label": "Named areas are defined",          "selector": ".shell",  "prop": "grid-template-areas",  "contains": "nav" },
+        { "label": "The sidebar is placed in the nav area", "selector": ".sidebar", "prop": "grid-column-start", "contains": "nav" },
+        { "label": "The first column is 120px wide",   "selector": ".shell",  "prop": "grid-template-columns", "contains": "120px" },
+        { "label": "Main is placed in the main area",  "selector": ".main",   "prop": "grid-column-start",    "contains": "main" }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 08 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="08-positioning">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 08</span><span class="tag tag--2">Module 2 · Position</span></div>
+        <h3 style="margin-block-start:.4rem;">Pin the badge</h3>
+        <p class="lab__brief">
+          Pin <code class="inline">.badge</code> to the <b>top-right inside
+          corner</b> of <code class="inline">.product</code>, <b>8px</b> from
+          each edge. The badge must be positioned against the card — not the
+          page — so the card needs to become a positioning context first.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <div class="product">
+          <span class="badge">NEW</span>
+          <h3>Astromech Droid</h3>
+          <p>Repairs hyperdrives. Complains constantly.</p>
+        </div>
+      </template>
+
+      <template data-lab-start>
+        .product {
+          padding: 18px;
+          background: #0b1020;
+          border: 1px solid #1d2b44;
+          border-radius: 8px;
+          color: #dbe7f5;
+          /* TODO: make this the positioning context */
+        }
+        .badge {
+          background: #ffb703;
+          color: #05070d;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 3px 8px;
+          border-radius: 999px;
+          /* TODO: take me out of flow and pin me */
+        }
+        .product h3 { margin: 0 0 6px; font-size: 1rem; }
+        .product p  { margin: 0; font-size: 14px; color: #7d90ab; }
+      </template>
+
+      <template data-lab-solution>
+        .product {
+          padding: 18px;
+          background: #0b1020;
+          border: 1px solid #1d2b44;
+          border-radius: 8px;
+          color: #dbe7f5;
+          position: relative;
+        }
+        .badge {
+          background: #ffb703;
+          color: #05070d;
+          font-size: 11px;
+          font-weight: 700;
+          padding: 3px 8px;
+          border-radius: 999px;
+          position: absolute;
+          inset-block-start: 8px;
+          inset-inline-end: 8px;
+        }
+        .product h3 { margin: 0 0 6px; font-size: 1rem; }
+        .product p  { margin: 0; font-size: 14px; color: #7d90ab; }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "The card is a positioning context", "selector": ".product", "prop": "position", "equals": "relative" },
+        { "label": "The badge is out of normal flow",   "selector": ".badge",   "prop": "position", "equals": "absolute" },
+        { "label": "8px from the top",                  "selector": ".badge",   "prop": "top",      "equals": "8px" },
+        { "label": "8px from the right",                "selector": ".badge",   "prop": "right",    "equals": "8px" }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 09 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="09-has">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 09</span><span class="tag tag--2">Module 3 · :has()</span></div>
+        <h3 style="margin-block-start:.4rem;">Style a parent by what's inside it</h3>
+        <p class="lab__brief">
+          Give every <code class="inline">.entry</code> that <b>contains</b> a
+          <code class="inline">.tag</code> a background of <b>#f3e6c8</b> and a
+          <b>4px solid #a67c22</b> left border — using
+          <code class="inline">:has()</code>. Entries without a tag must stay
+          exactly as they are. You may not add a class to the HTML.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <ul class="log">
+          <li class="entry"><p>Long rest at camp.</p></li>
+          <li class="entry"><p>Attack roll against the goblin.</p><span class="tag">nat 20</span></li>
+          <li class="entry"><p>Persuasion check failed.</p></li>
+        </ul>
+      </template>
+
+      <template data-lab-start>
+        .log { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+        .entry {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 14px;
+          border-left: 4px solid transparent;
+          border-radius: 4px;
+          font-family: Georgia, serif;
+        }
+        .entry p { margin: 0; }
+        .tag {
+          font-family: monospace;
+          font-size: 11px;
+          background: #a67c22;
+          color: #fff;
+          padding: 2px 8px;
+          border-radius: 999px;
+        }
+        /* TODO: highlight only the entries that contain a .tag */
+      </template>
+
+      <template data-lab-solution>
+        .log { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+        .entry {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 14px;
+          border-left: 4px solid transparent;
+          border-radius: 4px;
+          font-family: Georgia, serif;
+        }
+        .entry p { margin: 0; }
+        .tag {
+          font-family: monospace;
+          font-size: 11px;
+          background: #a67c22;
+          color: #fff;
+          padding: 2px 8px;
+          border-radius: 999px;
+        }
+        .entry:has(.tag) {
+          background: #f3e6c8;
+          border-left-color: #a67c22;
+        }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "A tagged entry gets the parchment background", "selector": ".entry:has(.tag)", "prop": "background-color", "equals": "#f3e6c8" },
+        { "label": "…and a gold left border",                      "selector": ".entry:has(.tag)", "prop": "border-left-color", "equals": "#a67c22" },
+        { "label": "Untagged entries are left alone",              "selector": ".entry:not(:has(.tag))", "prop": "background-color", "equals": "transparent" }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== 10 -->
+  <section class="wrap section">
+    <div class="lab" data-lab="10-motion">
+      <div class="lab__head">
+        <div class="cluster"><span class="tag">Lab 10</span><span class="tag tag--2">Module 3 · Motion</span></div>
+        <h3 style="margin-block-start:.4rem;">Motion that stays cheap</h3>
+        <p class="lab__brief">
+          Transition <b>only</b> <code class="inline">transform</code> and
+          <code class="inline">opacity</code> on <code class="inline">.rune</code>
+          — in that order, over <b>0.3s</b> — and lift it on hover with
+          <code class="inline">translateY(-6px)</code>. Then write a
+          <code class="inline">@keyframes pulse</code> and run it on
+          <code class="inline">.glow</code>. No
+          <code class="inline">transition: all</code>, and nothing that animates
+          <code class="inline">width</code>, <code class="inline">top</code> or
+          <code class="inline">margin</code>.
+        </p>
+      </div>
+
+      <template data-lab-html>
+        <div class="rune">
+          <span class="glow"></span>
+          <strong>Hover me</strong>
+        </div>
+      </template>
+
+      <template data-lab-start>
+        .rune {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 20px;
+          background: #f7efdd;
+          border: 2px solid #a67c22;
+          border-radius: 6px;
+          font-family: Georgia, serif;
+          /* TODO: transition transform and opacity over 0.3s */
+        }
+        .rune:hover {
+          /* TODO: lift it */
+        }
+        .glow {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #8a1c1c;
+          /* TODO: run the pulse animation */
+        }
+        /* TODO: @keyframes pulse — fade the opacity down and back */
+      </template>
+
+      <template data-lab-solution>
+        .rune {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 14px 20px;
+          background: #f7efdd;
+          border: 2px solid #a67c22;
+          border-radius: 6px;
+          font-family: Georgia, serif;
+          transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .rune:hover {
+          transform: translateY(-6px);
+        }
+        .glow {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #8a1c1c;
+          animation: pulse 1.2s ease-in-out infinite alternate;
+        }
+        @keyframes pulse {
+          from { opacity: 1; }
+          to   { opacity: 0.25; }
+        }
+      </template>
+
+      <script type="application/json" data-lab-checks>
+      [
+        { "label": "Only transform and opacity transition", "selector": ".rune", "prop": "transition-property", "equals": "transform, opacity" },
+        { "label": "The transition lasts 0.3s",             "selector": ".rune", "prop": "transition-duration", "min": 0.29, "max": 0.31 },
+        { "label": "An animation named pulse runs on .glow","selector": ".glow", "prop": "animation-name",      "equals": "pulse" },
+        { "label": "The animation actually has a duration", "selector": ".glow", "prop": "animation-duration",  "min": 0.1 },
+        { "label": "It repeats",                            "selector": ".glow", "prop": "animation-iteration-count", "equals": "infinite" }
+      ]
+      </script>
+
+      <div data-lab-mount></div>
+    </div>
+  </section>
+
+  <!-- =============================================================== -->
+  <section class="wrap section">
+    <div class="prose">
+      <h2 class="mt-0">Writing your own lab</h2>
+      <p>
+        A lab is one <code class="inline">&lt;div class="lab" data-lab="unique-id"&gt;</code>
+        containing three templates, a JSON block of checks, and an empty mount
+        point. <code class="inline">assets/js/exercises.js</code> builds the
+        editor, the preview and the checklist from that.
+      </p>
+      <pre class="code">&lt;div class="lab" <b>data-lab</b>="11-my-lab"&gt;
+  &lt;div class="lab__head"&gt;…<i>title and brief</i>…&lt;/div&gt;
+
+  &lt;template <b>data-lab-html</b>&gt;      <i>&lt;!-- the fixed markup --&gt;</i>
+    &lt;div class="thing"&gt;Hello&lt;/div&gt;
+  &lt;/template&gt;
+
+  &lt;template <b>data-lab-start</b>&gt;     <i>/* what the student begins with */</i>
+    .thing { /* TODO: make it red */ }
+  &lt;/template&gt;
+
+  &lt;template <b>data-lab-solution</b>&gt;  <i>/* revealed on request */</i>
+    .thing { color: red; }
+  &lt;/template&gt;
+
+  &lt;script type="application/json" <b>data-lab-checks</b>&gt;
+    [{ "label": "It is red", "selector": ".thing", "prop": "color", "equals": "red" }]
+  &lt;/script&gt;
+
+  &lt;div <b>data-lab-mount</b>&gt;&lt;/div&gt;
+&lt;/div&gt;</pre>
+      <h3>Every check option</h3>
+      <div class="table-scroll">
+        <table class="data">
+          <thead><tr><th>Key</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>label</code></td><td>What the student sees in the checklist. Required.</td></tr>
+            <tr><td><code>selector</code></td><td>Any CSS selector, including <code>:has()</code> and <code>:not()</code>. Defaults to <code>body</code>.</td></tr>
+            <tr><td><code>prop</code></td><td>The property to read — including custom properties like <code>--chip-bg</code>.</td></tr>
+            <tr><td><code>pseudo</code></td><td>Optional, e.g. <code>"::before"</code>.</td></tr>
+            <tr><td><code>equals</code></td><td>A value, or an array of acceptable values. Compared against the <em>computed</em> value, so <code>"#e60012"</code> and <code>"rgb(230 0 18)"</code> both match.</td></tr>
+            <tr><td><code>notEquals</code></td><td>Fails if the computed value matches. Good for "you must change this from the default".</td></tr>
+            <tr><td><code>contains</code></td><td>Substring match. Use for <code>font-family</code>, <code>grid-template-areas</code>.</td></tr>
+            <tr><td><code>min</code> / <code>max</code></td><td>Numeric range on the first number in the value. Use for sizes that can legitimately vary.</td></tr>
+            <tr><td><code>count</code></td><td>Exactly this many elements match the selector.</td></tr>
+            <tr><td><code>exists</code></td><td>Just assert that something matches the selector.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note note--tip">
+        <strong>Design checks around the outcome you can measure.</strong>
+        A computed style cannot tell you whether a student used
+        <code class="inline">clamp()</code> or a hardcoded pixel value that
+        happens to land in range. State the technique in the brief, check what
+        you can, and mark the rest by eye — the point is that the student can
+        run the check themselves before they show you.
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><b>Exercises.</b> Your work is stored in this browser's
+      <code class="inline">localStorage</code> under
+      <code class="inline">css-course:lab:*</code> — it never leaves your machine.</p>
+  </div>
+</footer>
+
+<script src="assets/js/sandbox.js"></script>
+<script src="assets/js/exercises.js"></script>
+</body>
+</html>

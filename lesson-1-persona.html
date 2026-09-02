@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 1 · Foundations — CSS Walk-Alongs</title>
+<meta name="description" content="Selectors, specificity, the box model, color, typography and custom properties, taught through a Persona-5-inspired theme.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🃏</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/theme-persona.css">
+</head>
+<body class="page theme-persona">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="index.html"><span class="brand__mark">CSS</span> Walk-Alongs</a>
+    <nav class="nav" aria-label="Main">
+      <a href="index.html"><span>Home</span></a>
+      <a href="lesson-1-persona.html" aria-current="page"><span>1 · Foundations</span></a>
+      <a href="lesson-2-starwars.html"><span>2 · Layout</span></a>
+      <a href="lesson-3-baldursgate.html"><span>3 · Modern</span></a>
+      <a href="code-review.html"><span>Code Review</span></a>
+      <a href="exercises.html"><span>Exercises</span></a>
+      <a href="resources.html"><span>Resources</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap hero">
+    <p class="eyebrow">Module 1 · Theme: “Phantom”</p>
+    <h1><span class="sticker">Take Your Heart</span></h1>
+    <p class="lede">
+      Red, black, and a ruthless refusal to align anything to a grid. This
+      module covers the four things every other CSS skill is built on:
+      <b>selectors</b>, <b>the cascade</b>, <b>the box model</b>, and
+      <b>tokens</b>.
+    </p>
+    <div class="cluster" style="margin-block-start: var(--space-m);">
+      <span class="tag">Beginner</span>
+      <span class="tag tag--2">≈ 2 sessions</span>
+    </div>
+  </section>
+
+  <div class="tear" role="presentation"></div>
+
+  <div class="wrap section lesson-layout">
+
+    <nav class="toc" aria-label="On this page">
+      <p class="eyebrow">Contents</p>
+      <ol>
+        <li><a href="#selectors">Selectors</a></li>
+        <li><a href="#cascade">Cascade &amp; specificity</a></li>
+        <li><a href="#boxmodel">Box model</a></li>
+        <li><a href="#color">Color &amp; units</a></li>
+        <li><a href="#type">Typography</a></li>
+        <li><a href="#tokens">Custom properties</a></li>
+        <li><a href="#states">States &amp; pseudo-elements</a></li>
+        <li><a href="#build">What we build</a></li>
+      </ol>
+    </nav>
+
+    <div class="stack">
+
+      <!-- =============================================== 1. SELECTORS -->
+      <section id="selectors" class="prose">
+        <h2><span class="slash">01 — Selectors</span></h2>
+        <p>
+          A CSS rule is a <b>selector</b>, then a block of
+          <b>declarations</b>. Each declaration is a property and a value.
+          That's the whole language.
+        </p>
+        <pre class="code"><b>.card</b> {              <i>/* selector */</i>
+  <b>background-color</b>: <u>#151515</u>;   <i>/* declaration */</i>
+  <b>padding</b>: <u>1.5rem</u>;
+}</pre>
+        <p>The selectors you will use ninety percent of the time:</p>
+        <div class="table-scroll">
+          <table class="data">
+            <thead><tr><th>Selector</th><th>Matches</th><th>Use it for</th></tr></thead>
+            <tbody>
+              <tr><td><code>.card</code></td><td>class</td><td>Almost everything. Your default.</td></tr>
+              <tr><td><code>#main</code></td><td>id</td><td>Anchors and JS hooks — rarely styling.</td></tr>
+              <tr><td><code>button</code></td><td>element</td><td>Base styles and resets.</td></tr>
+              <tr><td><code>[aria-current]</code></td><td>attribute</td><td>State that already exists in your HTML.</td></tr>
+              <tr><td><code>.card p</code></td><td>any p inside .card</td><td>Descendants, at any depth.</td></tr>
+              <tr><td><code>.card &gt; p</code></td><td>direct children only</td><td>Precision. Prevents leaking into nested components.</td></tr>
+              <tr><td><code>h2 + p</code></td><td>the p right after an h2</td><td>Spacing between siblings.</td></tr>
+              <tr><td><code>.card:hover</code></td><td>state</td><td>Interaction.</td></tr>
+              <tr><td><code>.card::before</code></td><td>a generated child</td><td>Decoration with no extra markup.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note note--tip">
+          <strong>Rule of thumb:</strong> style with classes. Reach for element
+          selectors only in your reset, and treat ids as off-limits for styling
+          — you will regret their specificity within a week.
+        </div>
+      </section>
+
+      <!-- =============================================== 2. CASCADE -->
+      <section id="cascade" class="prose">
+        <h2><span class="slash">02 — Cascade &amp; specificity</span></h2>
+        <p>
+          When two rules set the same property on the same element, the browser
+          picks a winner in this order. Stop at the first tiebreak that decides it:
+        </p>
+        <ol>
+          <li><b>Origin &amp; importance</b> — your author styles beat the browser's defaults; <code class="inline">!important</code> jumps the queue.</li>
+          <li><b>Specificity</b> — counted as <code class="inline">(ids, classes, elements)</code>.</li>
+          <li><b>Source order</b> — last one written wins.</li>
+        </ol>
+        <pre class="code"><i>/* specificity 0,1,0 */</i>
+.title { color: white; }
+
+<i>/* specificity 0,2,0 — wins, even though it is written first */</i>
+.card .title { color: red; }
+
+<i>/* specificity 1,0,0 — wins over both. This is why we avoid ids. */</i>
+#hero .title { color: blue; }</pre>
+        <p>
+          Two selectors that always score <b>0,0,0</b> and are therefore easy to
+          override — which is exactly what makes them good:
+          <code class="inline">:where()</code> and the universal selector
+          <code class="inline">*</code>.
+        </p>
+        <pre class="code"><i>/* Both of these style the same links… */</i>
+.prose a          { color: red; }   <i>/* 0,1,1 — hard to override later */</i>
+:where(.prose) a  { color: red; }   <i>/* 0,0,1 — a suggestion, not a fight */</i></pre>
+        <div class="note note--warn">
+          <strong>Debugging the cascade:</strong> open DevTools, select the
+          element, look at the Styles pane. Struck-through declarations lost.
+          Hover the selector to see its specificity. Ninety percent of "CSS is
+          broken" is a rule losing a tiebreak you didn't know about.
+        </div>
+      </section>
+
+      <!-- =============================================== 3. BOX MODEL -->
+      <section id="boxmodel" class="prose">
+        <h2><span class="slash">03 — The box model</span></h2>
+        <p>
+          Every element is a box: <b>content</b>, wrapped in <b>padding</b>,
+          wrapped in a <b>border</b>, with <b>margin</b> pushing other boxes
+          away outside it.
+        </p>
+        <div class="side-by-side">
+          <pre class="code"><i>/* The one line that makes sizing sane. */</i>
+*, *::before, *::after {
+  <b>box-sizing</b>: <u>border-box</u>;
+}
+
+<i>/* width:200px now means the box is
+   200px wide, full stop — padding and
+   border are counted INSIDE it. */</i>
+.box {
+  width: 200px;
+  padding: 20px;
+  border: 4px solid red;
+}</pre>
+          <div class="demo">
+            <span class="demo__label">border-box vs content-box</span>
+            <div style="display:grid; gap:1rem;">
+              <div style="box-sizing:border-box; width:200px; padding:14px; border:4px solid var(--accent); background:var(--surface); font-family:var(--font-mono); font-size:.75rem;">
+                border-box → 200px wide
+              </div>
+              <div style="box-sizing:content-box; width:200px; padding:14px; border:4px dashed var(--text-dim); background:var(--surface); font-family:var(--font-mono); font-size:.75rem;">
+                content-box → 236px wide
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>Margin collapse — the classic surprise</h3>
+        <p>
+          Two <em>vertical</em> margins that touch merge into one, and the
+          larger one wins. A 40px bottom margin next to a 20px top margin gives
+          you 40px of space, not 60px. Horizontal margins never collapse, and
+          the collapse stops if there is a border, padding, or a flex/grid
+          container in between.
+        </p>
+        <div class="note note--tip">
+          <strong>The modern fix:</strong> stop fighting it. Use
+          <code class="inline">gap</code> on a flex or grid parent, or the
+          "owl" pattern:
+          <code class="inline">.stack &gt; * + * { margin-block-start: 1rem; }</code>
+          — which is exactly what <code class="inline">.stack</code> in
+          <code class="inline">base.css</code> does.
+        </div>
+      </section>
+
+      <!-- =============================================== 4. COLOR -->
+      <section id="color" class="prose">
+        <h2><span class="slash">04 — Color &amp; units</span></h2>
+        <pre class="code">color: <u>#e60012</u>;                      <i>/* hex — fine, unreadable */</i>
+color: <u>rgb(230 0 18)</u>;                <i>/* modern space-separated syntax */</i>
+color: <u>rgb(230 0 18 / 0.5)</u>;          <i>/* alpha with a slash, no rgba() needed */</i>
+color: <u>hsl(355 100% 45%)</u>;            <i>/* hue, saturation, lightness — easy to tweak */</i>
+color: <u>oklch(55% 0.22 25)</u>;           <i>/* perceptually uniform: 55% looks 55% at every hue */</i>
+color: <u>color-mix(in srgb, red 20%, black)</u>;  <i>/* blend without a preprocessor */</i></pre>
+        <p>Units, and when each one is right:</p>
+        <div class="table-scroll">
+          <table class="data">
+            <thead><tr><th>Unit</th><th>Relative to</th><th>Use for</th></tr></thead>
+            <tbody>
+              <tr><td><code>px</code></td><td>nothing</td><td>Borders, tiny fixed details.</td></tr>
+              <tr><td><code>rem</code></td><td>the root font size</td><td><b>Default choice.</b> Spacing, font sizes — respects the user's browser setting.</td></tr>
+              <tr><td><code>em</code></td><td>the element's own font size</td><td>Padding inside a button that should scale with its text.</td></tr>
+              <tr><td><code>%</code></td><td>the parent</td><td>Widths inside a container.</td></tr>
+              <tr><td><code>ch</code></td><td>width of a "0"</td><td>Reading measure: <code>max-width: 68ch</code>.</td></tr>
+              <tr><td><code>vw / vh</code></td><td>the viewport</td><td>Full-bleed sections. Beware <code>100vh</code> on mobile — prefer <code>100dvh</code>.</td></tr>
+              <tr><td><code>fr</code></td><td>free space in a grid</td><td>Grid tracks, and nothing else.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- =============================================== 5. TYPE -->
+      <section id="type" class="prose">
+        <h2><span class="slash">05 — Typography</span></h2>
+        <p>
+          This theme runs on exactly two typefaces: a heavy display face
+          screaming in all-caps, and a plain workhorse for body text. Two is
+          usually the right number.
+        </p>
+        <div class="side-by-side">
+          <pre class="code">h1 {
+  font-family: <u>"Archivo Black", Impact, sans-serif</u>;
+  <i>/* fluid: min, scaled, max — no media query */</i>
+  font-size: <u>clamp(2.5rem, 2rem + 2.4vw, 3.9rem)</u>;
+  line-height: <u>1.05</u>;          <i>/* tight for big text */</i>
+  letter-spacing: <u>0.01em</u>;
+  text-transform: <u>uppercase</u>;
+  text-wrap: <u>balance</u>;         <i>/* no orphan words */</i>
+}
+
+p {
+  line-height: <u>1.6</u>;           <i>/* loose for small text */</i>
+  max-inline-size: <u>68ch</u>;      <i>/* ~68 characters per line */</i>
+  text-wrap: <u>pretty</u>;
+}</pre>
+          <div class="demo">
+            <span class="demo__label">The result</span>
+            <h3 style="font-size: var(--step-4);">Phantom<br>Thieves</h3>
+            <p class="dim" style="margin-block-start:.5rem;">
+              Line height and measure do more for readability than the choice
+              of typeface ever will.
+            </p>
+          </div>
+        </div>
+        <div class="note">
+          <strong>Always ship a fallback stack.</strong> Your webfont can fail
+          to load, and the page still has to be readable:
+          <code class="inline">font-family: "Archivo Black", Impact, sans-serif;</code>
+        </div>
+      </section>
+
+      <!-- =============================================== 6. TOKENS -->
+      <section id="tokens" class="prose">
+        <h2><span class="slash">06 — Custom properties</span></h2>
+        <p>
+          Custom properties are real, live CSS values. They <b>inherit</b>, they
+          <b>cascade</b>, and JavaScript can change them at runtime — none of
+          which is true of a Sass variable.
+        </p>
+        <pre class="code"><b>:root</b> {
+  <u>--accent</u>: #e60012;
+  <u>--space-m</u>: 1.5rem;
+}
+
+.card {
+  border-color: <b>var(--accent)</b>;
+  padding: <b>var(--space-m)</b>;
+  <i>/* second argument = fallback if the property is not set */</i>
+  gap: <b>var(--card-gap, 0.5rem)</b>;
+}
+
+<i>/* Re-declare on a scope and everything inside it changes. */</i>
+.card<b>.is-danger</b> { <u>--accent</u>: #ff5555; }</pre>
+        <div class="note note--tip">
+          <strong>This is the whole theming system.</strong> Open
+          <code class="inline">assets/css/theme-persona.css</code> — it is
+          barely more than a <code class="inline">:root</code> block. Swap it
+          for <code class="inline">theme-starwars.css</code> in the
+          <code class="inline">&lt;head&gt;</code> and this page becomes a
+          spaceship without one component changing.
+        </div>
+      </section>
+
+      <!-- =============================================== 7. STATES -->
+      <section id="states" class="prose">
+        <h2><span class="slash">07 — States &amp; pseudo-elements</span></h2>
+        <p>
+          <b>Pseudo-classes</b> (one colon) select an element in a state.
+          <b>Pseudo-elements</b> (two colons) invent a child element for you to
+          decorate with.
+        </p>
+        <pre class="code">.btn<b>:hover</b>          { filter: brightness(1.1); }
+.btn<b>:focus-visible</b>  { outline: 2px solid var(--accent); }  <i>/* keyboard only */</i>
+.btn<b>:disabled</b>       { opacity: .5; cursor: not-allowed; }
+li<b>:nth-child(odd)</b>   { background: var(--surface); }
+p<b>:first-of-type</b>     { font-size: 1.2em; }
+
+<i>/* A red rule above every card title — zero extra HTML. */</i>
+.card h3<b>::before</b> {
+  <b>content</b>: <u>""</u>;        <i>/* REQUIRED, or nothing renders */</i>
+  display: block;
+  inline-size: 2.5rem;
+  block-size: 4px;
+  background: var(--accent);
+}</pre>
+        <div class="note note--warn">
+          <strong>Never write <code class="inline">outline: none</code></strong>
+          on a focusable element unless you replace it in the same rule.
+          Keyboard users navigate by that ring. Use
+          <code class="inline">:focus-visible</code> so mouse clicks stay clean
+          and keyboard focus stays obvious.
+        </div>
+      </section>
+
+      <!-- =============================================== 8. BUILD -->
+      <section id="build" class="prose">
+        <h2><span class="slash">08 — What we build together</span></h2>
+        <p>
+          A hero, a torn divider, and a three-card grid — every one of them
+          using only what is above. Here is the finished component, live:
+        </p>
+      </section>
+
+      <div class="grid" style="--min: 240px;">
+        <div class="card">
+          <span class="tag">Selector</span>
+          <h3>Reveal</h3>
+          <p>Class selectors, descendant selectors, and knowing which one wins.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Box</span>
+          <h3>Contain</h3>
+          <p>Padding inside, margin outside, <code class="inline">border-box</code> always.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Token</span>
+          <h3>Rebrand</h3>
+          <p>One <code class="inline">:root</code> block, an entirely different site.</p>
+        </div>
+      </div>
+
+      <div class="note note--tip" style="margin-block-start: var(--space-xl);">
+        <strong>Your turn:</strong> labs <b>01–04</b> on the
+        <a href="exercises.html">Exercises page</a> cover exactly this module.
+        Then read case studies <b>1</b> and <b>2</b> on the
+        <a href="code-review.html">Code Review page</a> to see the mistakes
+        we all make first.
+      </div>
+
+      <nav class="cluster" style="margin-block-start: var(--space-xl);">
+        <a class="btn btn--ghost" href="index.html">← All modules</a>
+        <a class="btn" href="lesson-2-starwars.html">Module 2 · Layout →</a>
+      </nav>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p><b>Module 1 · Foundations.</b> Theme “Phantom” is an original CSS homage —
+      no game assets or trademarked material are used.</p>
+  </div>
+</footer>
+
+</body>
+</html>
